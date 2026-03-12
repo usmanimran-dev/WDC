@@ -1,73 +1,123 @@
-# React + TypeScript + Vite
+# 🚀 WDC — Web App Developers of Chicago
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A premium, high-performance agency portfolio built with modern web technologies. Features stunning animations, a fully automated blog system, and a powerful admin dashboard.
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7.3-646CFF?logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?logo=tailwindcss&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-FF0050?logo=framer&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-Backend-3FCF8E?logo=supabase&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **🎨 Premium Design** — Dark-mode glassmorphism UI with smooth micro-animations (Framer Motion + GSAP)
+- **📝 Auto-Synced Blog** — Blog posts are fetched live from [Dev.to](https://dev.to) via API — publish on Dev.to, it appears on your site instantly
+- **📢 Smart Announcement Bar** — Automatically highlights your latest Dev.to article; falls back to a custom CTA
+- **🖥️ Admin Dashboard** — Protected admin panel to manage projects and content via Supabase
+- **📱 Fully Responsive** — Optimized for all screen sizes with mobile-first design
+- **⚡ Lightning Fast** — Built on Vite with code-splitting and optimized asset loading
+- **🔍 SEO Optimized** — Structured data (JSON-LD), Open Graph, Twitter Cards, and semantic HTML
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Layer | Technologies |
+|---|---|
+| **Frontend** | React 19, TypeScript, Vite |
+| **Styling** | Tailwind CSS 4, Custom CSS |
+| **Animations** | Framer Motion, GSAP + ScrollTrigger |
+| **Backend** | Supabase (Auth, Database, Storage) |
+| **Blog Engine** | Dev.to API (auto-synced) |
+| **Routing** | React Router v7 |
+| **State** | TanStack React Query |
+| **Icons** | Lucide React |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📂 Project Structure
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── admin/              # Protected admin dashboard
+│   ├── AdminLayout.tsx
+│   ├── Dashboard.tsx
+│   ├── ManageProjects.tsx
+│   └── ManageBlogs.tsx
+├── assets/             # Images & static assets
+├── components/         # Reusable UI components
+│   ├── Header.tsx
+│   ├── Hero.tsx
+│   ├── Services.tsx
+│   ├── Projects.tsx
+│   ├── WorkExperience.tsx
+│   ├── Testimonials.tsx
+│   ├── Blog.tsx
+│   ├── Contact.tsx
+│   ├── Footer.tsx
+│   ├── AnnouncementBar.tsx
+│   └── ui/             # shadcn/ui primitives
+├── contexts/           # Auth context
+├── hooks/              # Custom React hooks
+├── lib/                # Supabase client config
+├── pages/              # Route-level pages
+│   ├── Index.tsx
+│   ├── BlogList.tsx
+│   ├── BlogPost.tsx
+│   └── Login.tsx
+├── routes/             # Protected route wrapper
+├── services/           # API service layer
+│   ├── public.api.ts   # Dev.to + Supabase fetchers
+│   └── admin.api.ts    # Admin CRUD operations
+├── types/              # TypeScript interfaces
+└── utils/              # Helpers & formatters
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
+- Node.js 18+
+- npm or yarn
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/usmanimran-dev/Webappdevelopersofchicago.git
+cd Webappdevelopersofchicago
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
+
+### Environment Variables
+
+Create a `.env` file in the root:
+
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+## 📝 Blog System
+
+The blog is **fully automated** via the Dev.to API:
+
+1. Write and publish an article on [dev.to](https://dev.to)
+2. Your website's `/blog` page automatically displays it
+3. The announcement bar highlights your latest post
+4. Individual blog posts are rendered with full HTML at `/blog/:slug`
+
+No code changes needed — just write and publish!
+
+## 📄 License
+
+This project is proprietary. All rights reserved.
+
+---
+
+<p align="center">
+  Built with ❤️ by <strong>WDC</strong> — Web App Developers of Chicago
+</p>
