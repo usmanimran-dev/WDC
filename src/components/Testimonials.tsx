@@ -5,22 +5,22 @@ import { gsap } from '../utils/gsapConfig';
 
 const testimonials = [
     {
-        name: 'Sarah Johnson',
-        role: 'CEO, TechCorp',
-        content: 'Working with this agency transformed our digital presence. Their attention to detail and creative vision exceeded all expectations.',
-        avatar: 'https://i.pravatar.cc/150?img=1'
+        name: 'Enterprise Client',
+        role: 'Fintech Sector',
+        content: 'Incredibly efficient — delivered a very complex, secure enterprise feature in record time.',
+        avatar: 'https://i.pravatar.cc/150?img=11'
     },
     {
-        name: 'Michael Chen',
-        role: 'Founder, StartupXYZ',
-        content: 'The team delivered exceptional results on time and within budget. Their professionalism and expertise are unmatched.',
-        avatar: 'https://i.pravatar.cc/150?img=3'
+        name: 'SaaS Startup Founder',
+        role: 'Tech Industry',
+        content: 'Went beyond coding — offered strategic architectural input that saved us thousands in cloud costs.',
+        avatar: 'https://i.pravatar.cc/150?img=14'
     },
     {
-        name: 'Emily Davis',
-        role: 'Marketing Director, BrandCo',
-        content: 'Absolutely phenomenal work! They took our vision and elevated it beyond what we imagined was possible.',
-        avatar: 'https://i.pravatar.cc/150?img=5'
+        name: 'Logistics Director',
+        role: 'Mobility Platform',
+        content: 'Architected a system that effortlessly handles our massive data syncing and real-time tracking without breaking.',
+        avatar: 'https://i.pravatar.cc/150?img=33'
     },
 ];
 

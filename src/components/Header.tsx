@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from './Button';
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
+import { AnnouncementBar } from './AnnouncementBar';
+import logoUrl from '../assets/ChatGPT Image Mar 12, 2026, 03_18_26 AM.png';
 
 export function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -25,91 +27,51 @@ export function Header() {
     }, []);
 
     const navItems = [
-        { label: 'Home', href: '#home' },
-        { label: 'Services', href: '#services' },
-        { label: 'Portfolio', href: '#portfolio' },
-        { label: 'About', href: '#about' },
-        { label: 'Testimonials', href: '#testimonials' },
-        { label: 'Contact', href: '#contact' },
+        { label: 'Home', href: '/' },
+        { label: 'Services', href: '/#services' },
+        { label: 'Projects', href: '/#projects' },
+        { label: 'Blog', href: '/blog' },
+        { label: 'Experience', href: '/#work-experience' },
+        { label: 'Contact', href: '/#contact' },
     ];
 
     const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-        e.preventDefault();
-        const element = document.querySelector(href);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-            setIsMobileMenuOpen(false);
+        if (href.startsWith('/#') && window.location.pathname === '/') {
+            e.preventDefault();
+            const element = document.querySelector(href.replace('/', ''));
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                setIsMobileMenuOpen(false);
+            }
         }
     };
 
     return (
         <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 flex flex-col ${isScrolled
                 ? 'bg-darkNavy/80 backdrop-blur-xl shadow-premium border-b border-white/5 supports-[backdrop-filter]:bg-darkNavy/60'
                 : 'bg-transparent'
                 }`}
         >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16 md:h-20">
+            <AnnouncementBar />
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                <div className="flex items-center justify-between h-24 md:h-28">
                     {/* Logo */}
                     <motion.a
                         href="#home"
                         onClick={(e) => scrollToSection(e, '#home')}
-                        className="flex items-center space-x-3 group"
+                        className="flex items-center group py-2"
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
                     >
                         <motion.div
-                            className="relative w-12 h-12"
+                            className="relative h-24 sm:h-32 md:h-40 flex items-center"
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.3 }}
                         >
-                            {/* Outer rotating ring */}
-                            <motion.div
-                                className="absolute inset-0 rounded-xl border-2 border-mint/30"
-                                animate={{ rotate: 360 }}
-                                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                            />
-
-                            {/* Inner gradient box */}
-                            <motion.div
-                                className="absolute inset-1 bg-gradient-to-br from-royalBlue via-mint to-royalBlue rounded-lg flex items-center justify-center shadow-lg shadow-mint/20"
-                                whileHover={{
-                                    boxShadow: "0 0 30px rgba(16, 185, 129, 0.4)",
-                                    backgroundPosition: "200% center"
-                                }}
-                                style={{ backgroundSize: "200% 200%" }}
-                                transition={{ duration: 0.5 }}
-                            >
-                                {/* Letter U with modern styling */}
-                                <motion.span
-                                    className="text-white font-bold text-2xl font-display relative z-10"
-                                    whileHover={{ scale: 1.1 }}
-                                    transition={{ duration: 0.3 }}
-                                >
-                                    U
-                                </motion.span>
-
-                                {/* Accent dot */}
-                                <motion.div
-                                    className="absolute top-1 right-1 w-1.5 h-1.5 bg-white rounded-full"
-                                    animate={{
-                                        opacity: [0.5, 1, 0.5],
-                                        scale: [1, 1.2, 1]
-                                    }}
-                                    transition={{ duration: 2, repeat: Infinity }}
-                                />
-                            </motion.div>
+                            <img src={logoUrl} alt="Agency Logo" className="w-auto h-full object-contain drop-shadow-lg" />
                         </motion.div>
-
-                        <motion.span
-                            className="font-display font-bold text-xl text-white group-hover:text-mint transition-colors duration-300"
-                            whileHover={{ letterSpacing: "0.05em" }}
-                            transition={{ duration: 0.3 }}
-                        >
-                            Usman Imran
-                        </motion.span>
                     </motion.a>
 
                     {/* Desktop Navigation */}

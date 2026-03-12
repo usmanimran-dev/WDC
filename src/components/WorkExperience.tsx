@@ -5,18 +5,18 @@ import { Briefcase, ArrowUpRight, Zap, ShieldCheck } from "lucide-react";
 
 const experiences = [
     {
-        company: "iVisionGate",
-        role: "Full-Stack Engineer",
-        location: "Onsite",
+        company: "Socium",
+        role: "Development Partner",
+        location: "Remote",
         dates: "2024 – Present",
-        summary: "Engineering scalable enterprise (HBL) and logistics (SwiftPack) systems. Designing resilient AWS infrastructure and high-performance Node.js/Angular architectures."
+        summary: "We led the end-to-end technical architecture and full-stack development for high-stakes enterprise clients. Engineered highly resilient, compliance-heavy banking systems (HBL, Finastra, Fusion Tech Innova) using Angular and Node.js. Built secure integrations with Finastra's core banking architecture to handle complex B2B financial workflows, ensuring high availability and zero-downtime deployments via AWS."
     },
     {
-        company: "Sociam",
-        role: "Flutter Developer",
-        location: "Remote",
-        dates: "2023 – 2024",
-        summary: "Developed production-ready Flutter applications for Android & iOS. Focused on clean architecture, real-time data sync, and optimized mobile performance."
+        company: "iVisionGate",
+        role: "Lead Technical Partner",
+        location: "Onsite",
+        dates: "2022 – 2024",
+        summary: "We architected the backend and logic engine for Swifpack (associated with Tanzania Posts Corporation). Built a comprehensive digital mobility and logistics platform that integrated ride-sharing, real-time fleet tracking, courier delivery, and corporate fleet management into a single, seamless ecosystem using Flutter, Next.js, Angular, Node.js, Firebase, MQTT, and AWS."
     }
 ];
 

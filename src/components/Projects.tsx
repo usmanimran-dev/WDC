@@ -21,7 +21,7 @@ const projects = [
     id: 20260225,
     title: "NGO Assist",
     subtitle: "Aid Distribution Platform",
-    description: "A full-stack aid distribution platform using Flutter (Web & Mobile), Node.js, and Prisma. Manages beneficiary registration, verification workflows, vendor-based assistance redemption, and audit monitoring with role-based access control.",
+    description: "A full-stack aid distribution platform using Flutter (Web & Mobile), Node.js, and Prisma. Manages beneficiary registration, verification workflows, vendor-based assistance redemption, and audit monitoring with role-based access control. Login: admin@ngo.org | Pwd: admin123",
     image: "https://oxputeaplbndzolsnyto.supabase.co/storage/v1/object/sign/Usman%20Imran/Screenshot%202026-02-25%20204034.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNmIzYmExMi1hYzlhLTQ3YTQtOTNkNS0xYTEyMzE4NTM4NTciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJVc21hbiBJbXJhbi9TY3JlZW5zaG90IDIwMjYtMDItMjUgMjA0MDM0LnBuZyIsImlhdCI6MTc3MjAzNDI1MywiZXhwIjoxODAzNTcwMjUzfQ.NV-sbWkxZb15E2zX83ZHuUzoBiPJ1d9eRpIb_JLxOIQ",
     category: "full-stack",
     tags: ["Flutter", "Node.js", "Prisma"],
@@ -63,7 +63,7 @@ const projects = [
   },
   {
     id: 20260132,
-    title: "Usman Imran",
+    title: "WDC Architecture",
     subtitle: "Digital Treasury Ecosystem",
     description: "A high-fidelity platform for digital asset firms, featuring encrypted data visualization and ultra-modern terminal aesthetics.",
     image: "https://oxputeaplbndzolsnyto.supabase.co/storage/v1/object/sign/Usman%20Imran/Screenshot%202026-01-30%20035422.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8wNmIzYmExMi1hYzlhLTQ3YTQtOTNkNS0xYTEyMzE4NTM4NTciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJVc21hbiBJbXJhbi9TY3JlZW5zaG90IDIwMjYtMDEtMzAgMDM1NDIyLnBuZyIsImlhdCI6MTc3MTg3OTQ3MywiZXhwIjoxODAzNDE1NDczfQ.eFbN5eP05R6asL0-AhaQ_etaNZ4qnqR3mRf0XiBf6OA",

@@ -10,6 +10,8 @@ import ProtectedRoute from "@/routes/ProtectedRoute";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+import BlogList from "./pages/BlogList";
+import BlogPost from "./pages/BlogPost";
 
 // Admin Pages
 import AdminLayout from "./admin/AdminLayout";
@@ -30,6 +32,8 @@ const App = () => (
             {/* ── Public Routes ── */}
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Navigate to="/?login=true" replace />} />
+            <Route path="/blog" element={<BlogList />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
 
             {/* ── Admin Routes (Protected) ── */}
             <Route

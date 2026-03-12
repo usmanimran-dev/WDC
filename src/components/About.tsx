@@ -2,9 +2,9 @@ import { motion } from 'framer-motion';
 import { Award, Users, Target, Sparkles } from 'lucide-react';
 
 const stats = [
-    { icon: Award, label: 'Years Experience', value: '10+' },
-    { icon: Users, label: 'Happy Clients', value: '500+' },
-    { icon: Target, label: 'Projects Delivered', value: '1000+' },
+    { icon: Award, label: 'Years Experience', value: '5+' },
+    { icon: Users, label: 'Enterprise Clients', value: 'Global' },
+    { icon: Target, label: 'Scalable Platforms', value: 'Production' },
 ];
 
 export const About = () => {
@@ -24,25 +24,25 @@ export const About = () => {
                     >
                         <div className="inline-flex items-center px-4 py-2 rounded-full bg-mint/10 border border-mint/20 backdrop-blur-sm mb-6">
                             <Sparkles className="text-mint mr-2" size={16} />
-                            <span className="text-mint font-medium text-sm">About Me</span>
+                            <span className="text-mint font-medium text-sm">About WDC</span>
                         </div>
 
                         <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                            Bridging complex logic
-                            <span className="block gradient-text">with clean code.</span>
+                            Architecting resilient systems
+                            <span className="block gradient-text">for Enterprise & Fintech.</span>
                         </h2>
 
                         <p className="text-white text-lg mb-6 leading-relaxed">
-                            Specialized in architecting scalable Full-Stack applications and delivering high-impact software solutions.
+                            We are WDC (Webapp Developers of Chicago), a premium Software Development Agency with a specialized focus on Enterprise Fintech, SaaS architecture, and expansive Digital Mobility & Logistics platforms.
                         </p>
 
                         <p className="text-textSecondary text-lg leading-relaxed mb-8">
-                            Designing robust, data-driven systems leveraging Modern Web Frameworks and AWS Cloud Architecture to engineer systems that empower users and drive innovation.
+                            We've helped major banking institutions (like HBL and Finastra), mobility platforms (like Swifpack), and agile SaaS startups build and scale highly resilient, production-grade applications. Our expertise spans clean logic engines, real-time tracking, B2B data synchronization, and secure, high-availability deployments.
                         </p>
 
                         <div className="flex items-center gap-4">
                             <div className="h-1 w-20 bg-gradient-to-r from-royalBlue to-mint rounded-full"></div>
-                            <span className="text-textSecondary font-medium">To engineer systems that empower users and drive innovation.</span>
+                            <span className="text-textSecondary font-medium">To engineer systems that empower users and scale dynamically.</span>
                         </div>
                     </motion.div>
 

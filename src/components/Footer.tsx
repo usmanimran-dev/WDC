@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Twitter, Heart, Instagram } from 'lucide-react';
+import logoUrl from '../assets/ChatGPT Image Mar 12, 2026, 03_18_26 AM.png';
 
 export const Footer = () => {
     return (
@@ -8,13 +9,10 @@ export const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                     {/* Brand */}
                     <div className="md:col-span-2">
-                        <div className="flex items-center space-x-2 mb-4">
-                            <div className="w-10 h-10 bg-gradient-to-br from-royalBlue to-mint rounded-lg flex items-center justify-center shadow-glow-mint">
-                                <span className="text-white font-bold text-xl font-display">U</span>
+                        <div className="flex items-center mb-6">
+                            <div className="h-32 sm:h-40 md:h-48 flex items-center">
+                                <img src={logoUrl} alt="Agency Logo" className="w-auto h-full object-contain drop-shadow-lg" />
                             </div>
-                            <h3 className="text-2xl font-bold text-white font-display">
-                                Usman Imran
-                            </h3>
                         </div>
                         <p className="text-textSecondary mb-6 max-w-md">
                             Building powerful web solutions that transform businesses and deliver exceptional results.
@@ -48,14 +46,27 @@ export const Footer = () => {
                     <div>
                         <h4 className="text-white font-bold mb-4 font-display">Quick Links</h4>
                         <ul className="space-y-3">
-                            {['Services', 'About', 'Portfolio', 'Testimonials', 'Contact'].map((link) => (
-                                <li key={link}>
+                            {[
+                                { label: 'Services', href: '#services' },
+                                { label: 'Projects', href: '#projects' },
+                                { label: 'Experience', href: '#work-experience' },
+                                { label: 'About', href: '#about' },
+                                { label: 'Contact', href: '#contact' },
+                            ].map((link) => (
+                                <li key={link.label}>
                                     <a
-                                        href={`#${link.toLowerCase()}`}
+                                        href={link.href}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            const element = document.querySelector(link.href);
+                                            if (element) {
+                                                element.scrollIntoView({ behavior: 'smooth' });
+                                            }
+                                        }}
                                         className="text-textSecondary hover:text-mint transition-colors duration-300 inline-flex items-center group"
                                     >
                                         <span className="w-0 h-px bg-mint group-hover:w-4 mr-0 group-hover:mr-2 transition-all duration-300"></span>
-                                        {link}
+                                        {link.label}
                                     </a>
                                 </li>
                             ))}
@@ -79,10 +90,10 @@ export const Footer = () => {
 
                 <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-textSecondary text-sm">
-                        © {new Date().getFullYear()} Usman Imran. All rights reserved.
+                        © {new Date().getFullYear()} WDC. All rights reserved.
                     </p>
                     <p className="text-textSecondary text-sm flex items-center gap-2">
-                        Made with <Heart className="w-4 h-4 text-mint fill-current animate-pulse" /> by Usman Imran
+                        Made with <Heart className="w-4 h-4 text-mint fill-current animate-pulse" /> by WDC
                     </p>
                 </div>
             </div>

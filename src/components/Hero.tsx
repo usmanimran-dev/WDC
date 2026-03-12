@@ -110,14 +110,14 @@ export const Hero = () => {
                 <div className="hero-badge hero-content-item flex items-center justify-center mb-8">
                     <div className="inline-flex items-center px-4 py-2 rounded-full bg-royalBlue/10 border border-royalBlue/20 backdrop-blur-sm">
                         <Sparkles className="text-mint mr-2" size={20} />
-                        <span className="text-textSecondary font-medium uppercase tracking-wide text-sm">Full-Stack Developer</span>
+                        <span className="text-textSecondary font-medium uppercase tracking-wide text-sm">Software Development Agency</span>
                     </div>
                 </div>
 
                 {/* Main Headline with 3D effect */}
                 <h1 className="hero-content-item text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight perspective-1000">
                     <span className="block text-white transform transition-transform duration-700 hover:scale-105">Software</span>
-                    <span className="block gradient-text transform transition-transform duration-700 hover:scale-105">Engineer & Developer</span>
+                    <span className="block gradient-text transform transition-transform duration-700 hover:scale-105">Engineers & Developers</span>
                 </h1>
 
                 {/* Subheadline */}
@@ -137,7 +137,7 @@ export const Hero = () => {
                                 if (element) element.scrollIntoView({ behavior: 'smooth' });
                             }}
                         >
-                            Hire Me
+                            Hire Us
                             <ArrowRight className="ml-2 inline-block group-hover:translate-x-1 transition-transform" size={20} />
                         </Button>
                     </MagneticButton>
@@ -147,7 +147,7 @@ export const Hero = () => {
                             size="lg"
                             className="min-w-[200px] transform transition-all duration-300 hover:scale-105"
                             onClick={() => {
-                                const element = document.querySelector('#portfolio');
+                                const element = document.querySelector('#projects');
                                 if (element) element.scrollIntoView({ behavior: 'smooth' });
                             }}
                         >

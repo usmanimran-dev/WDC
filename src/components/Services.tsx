@@ -1,38 +1,44 @@
 import { motion, useInView } from 'framer-motion';
-import { Code, Smartphone, ShoppingCart, Wrench, Globe } from 'lucide-react';
+import { Code, Smartphone, Database, Wrench, Globe, Cloud } from 'lucide-react';
 import { useRef, useEffect } from 'react';
 import { gsap } from '../utils/gsapConfig';
 
 const services = [
     {
-        title: 'Custom Websites',
-        description: 'Bespoke website development tailored to your brand and business goals with modern design.',
-        icon: Globe,
-        stack: ['React', 'Next.js', 'Tailwind CSS']
-    },
-    {
-        title: 'Web Applications',
-        description: 'Scalable web apps built with cutting-edge technology for exceptional performance.',
+        title: 'Full-Stack Development',
+        description: 'Building highly resilient, production-grade platforms with React.js, Next.js, and Node.js.',
         icon: Code,
-        stack: ['Node.js', 'PostgreSQL', 'TypeScript']
+        stack: ['React.js', 'Next.js', 'Node.js']
     },
     {
-        title: 'WordPress Development',
-        description: 'Custom WordPress sites with powerful themes, plugins, and seamless content management.',
+        title: 'Enterprise Fintech & Banking',
+        description: 'System architecture for major banking institutions (e.g., HBL, Finastra) with compliance-heavy workflows.',
+        icon: Globe,
+        stack: ['Angular', 'Node.js', 'AWS']
+    },
+    {
+        title: 'Digital Mobility & Logistics',
+        description: 'Integrated ride-sharing, real-time fleet tracking, and courier delivery platforms (e.g., Swifpack).',
         icon: Smartphone,
-        stack: ['PHP', 'MySQL', 'Elementor']
+        stack: ['Flutter', 'Real-time', 'MQTT']
     },
     {
-        title: 'Shopify E-Commerce',
-        description: 'Complete Shopify stores optimized for conversions and stunning shopping experiences.',
-        icon: ShoppingCart,
-        stack: ['Liquid', 'React', 'Shopify API']
+        title: 'Backend & Database Engineering',
+        description: 'Designing scalable data models and APIs with Node.js, Prisma, PostgreSQL, and Supabase.',
+        icon: Database,
+        stack: ['PostgreSQL', 'Prisma', 'Supabase']
     },
     {
-        title: 'Website Maintenance',
-        description: 'Ongoing support, updates, and optimization to keep your site running at peak performance.',
+        title: 'Cloud & DevOps',
+        description: 'AWS, CI/CD pipelines, zero-downtime deployments for high-availability systems.',
+        icon: Cloud,
+        stack: ['AWS', 'Docker', 'CI/CD']
+    },
+    {
+        title: 'Complex Integrations',
+        description: 'Secure payments, custom B2B sync engines, IoT telemetry (e.g., Smart Pump).',
         icon: Wrench,
-        stack: ['SEO', 'Performance', 'Security']
+        stack: ['B2B', 'IoT', 'Stripe']
     },
 ];
 
