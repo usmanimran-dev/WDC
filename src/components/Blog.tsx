@@ -1,14 +1,12 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight, BookOpen, Fingerprint } from "lucide-react";
-import { useRef, useEffect, useState } from 'react';
-import { gsap } from '../utils/gsapConfig';
+import { useEffect, useState } from 'react';
 import { fetchAllBlogs } from '@/services/public.api';
 import { BlogPost } from '@/types';
 import { formatDate, readingTime } from '@/utils/formatters';
 import { Link } from 'react-router-dom';
 
 export default function Blog() {
-    const sectionRef = useRef<HTMLElement>(null);
     const [blogs, setBlogs] = useState<BlogPost[]>([]);
 
     useEffect(() => {
@@ -17,26 +15,8 @@ export default function Blog() {
         });
     }, []);
 
-    useEffect(() => {
-        if (blogs.length === 0) return;
-        const ctx = gsap.context(() => {
-            gsap.from('.blog-card', {
-                y: 40,
-                opacity: 0,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: 'top 85%',
-                },
-            });
-        }, sectionRef);
-        return () => ctx.revert();
-    }, [blogs]);
-
     return (
-        <section ref={sectionRef} id="blog" className="py-32 bg-darkNavy relative overflow-hidden">
+        <section id="blog" className="py-32 bg-darkNavy relative overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-mint/5 via-darkNavy to-black pointer-events-none" />
             <div className="container mx-auto px-6 max-w-7xl relative z-10">
 
@@ -46,7 +26,7 @@ export default function Blog() {
                             className="text-5xl md:text-7xl font-bold font-display leading-tight mb-4 text-white"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 0.6 }}
                         >
                             Latest <br />
@@ -57,7 +37,7 @@ export default function Blog() {
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, margin: "-100px" }}
                     >
                         <Link to="/blog" className="group flex items-center gap-2 text-white/70 hover:text-white transition-colors duration-300 font-semibold border border-white/10 hover:border-mint/50 px-6 py-3 rounded-full bg-white/5 backdrop-blur-md">
                             View All Articles
@@ -68,41 +48,49 @@ export default function Blog() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {blogs.map((blog, idx) => (
-                        <Link
+                        <motion.div
                             key={blog.id}
-                            to={`/blog/${blog.slug}`}
-                            className="blog-card group relative flex flex-col p-8 rounded-3xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 hover:border-mint/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,229,160,0.15)] flex-grow"
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.6, delay: idx * 0.15 }}
+                            className="flex flex-col h-full"
                         >
-                            {/* Decorative background glow on hover */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-mint/0 via-mint/0 to-mint/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl pointer-events-none" />
-                            
-                            <div className="relative z-10 flex flex-col h-full">
-                                <div className="flex justify-between items-start mb-8">
-                                    <div className="p-3 bg-mint/10 border border-mint/20 rounded-2xl text-mint transition-all transform group-hover:scale-110 group-hover:bg-mint/20 duration-500">
-                                        {idx % 2 === 0 ? <BookOpen className="w-6 h-6" /> : <Fingerprint className="w-6 h-6" />}
+                            <Link
+                                to={`/blog/${blog.slug}`}
+                                className="blog-card group relative flex flex-col p-8 rounded-3xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 hover:border-mint/40 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,229,160,0.15)] flex-grow"
+                            >
+                                {/* Decorative background glow on hover */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-mint/0 via-mint/0 to-mint/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl pointer-events-none" />
+                                
+                                <div className="relative z-10 flex flex-col h-full">
+                                    <div className="flex justify-between items-start mb-8">
+                                        <div className="p-3 bg-mint/10 border border-mint/20 rounded-2xl text-mint transition-all transform group-hover:scale-110 group-hover:bg-mint/20 duration-500">
+                                            {idx % 2 === 0 ? <BookOpen className="w-6 h-6" /> : <Fingerprint className="w-6 h-6" />}
+                                        </div>
+                                        <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-mint border border-white/10 text-white/50 transition-colors duration-500">
+                                            <ArrowUpRight className="w-5 h-5 group-hover:text-darkNavy block" />
+                                        </div>
                                     </div>
-                                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-mint border border-white/10 text-white/50 transition-colors duration-500">
-                                        <ArrowUpRight className="w-5 h-5 group-hover:text-darkNavy block" />
+
+                                    <h3 className="text-xl font-bold text-white leading-snug mb-4 group-hover:text-mint transition-colors line-clamp-3">
+                                        {blog.title}
+                                    </h3>
+                                    <p className="text-sm text-white/50 leading-relaxed line-clamp-4 flex-grow mb-8">
+                                        {blog.excerpt}
+                                    </p>
+
+                                    <div className="flex items-center justify-between pt-6 border-t border-white/10 mt-auto">
+                                        <span className="text-[10px] font-bold tracking-widest text-mint uppercase">
+                                            {formatDate(blog.created_at)}
+                                        </span>
+                                        <span className="text-[10px] font-bold tracking-widest text-white/60 uppercase border border-white/10 px-3 py-1.5 rounded-lg group-hover:border-white/30 transition-colors bg-black/20">
+                                            {readingTime(blog.content)}
+                                        </span>
                                     </div>
                                 </div>
-
-                                <h3 className="text-xl font-bold text-white leading-snug mb-4 group-hover:text-mint transition-colors line-clamp-3">
-                                    {blog.title}
-                                </h3>
-                                <p className="text-sm text-white/50 leading-relaxed line-clamp-4 flex-grow mb-8">
-                                    {blog.excerpt}
-                                </p>
-
-                                <div className="flex items-center justify-between pt-6 border-t border-white/10 mt-auto">
-                                    <span className="text-[10px] font-bold tracking-widest text-mint uppercase">
-                                        {formatDate(blog.created_at)}
-                                    </span>
-                                    <span className="text-[10px] font-bold tracking-widest text-white/60 uppercase border border-white/10 px-3 py-1.5 rounded-lg group-hover:border-white/30 transition-colors bg-black/20">
-                                        {readingTime(blog.content)}
-                                    </span>
-                                </div>
-                            </div>
-                        </Link>
+                            </Link>
+                        </motion.div>
                     ))}
                 </div>
             </div>
