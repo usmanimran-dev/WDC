@@ -2,14 +2,16 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Button } from './Button';
 import { ArrowRight, Sparkles, ChevronDown } from 'lucide-react';
 import { MagneticButton } from './MagneticButton';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { gsap } from '../utils/gsapConfig';
 import { useMousePosition } from '../hooks/useMousePosition';
+import HireUsModal from './HireUsModal';
 
 export const Hero = () => {
     const sectionRef = useRef<HTMLElement>(null);
     const mousePosition = useMousePosition();
     const { scrollY } = useScroll();
+    const [isHireModalOpen, setIsHireModalOpen] = useState(false);
 
     // Parallax transforms based on scroll
     const y1 = useTransform(scrollY, [0, 500], [0, 150]);
@@ -47,6 +49,7 @@ export const Hero = () => {
     };
 
     return (
+        <>
         <section
             ref={sectionRef}
             id="home"
@@ -132,10 +135,7 @@ export const Hero = () => {
                             variant="mint"
                             size="lg"
                             className="group min-w-[200px] transform transition-all duration-300 hover:scale-105 hover:shadow-glow-mint"
-                            onClick={() => {
-                                const element = document.querySelector('#contact');
-                                if (element) element.scrollIntoView({ behavior: 'smooth' });
-                            }}
+                            onClick={() => setIsHireModalOpen(true)}
                         >
                             Hire Us
                             <ArrowRight className="ml-2 inline-block group-hover:translate-x-1 transition-transform" size={20} />
@@ -181,7 +181,12 @@ export const Hero = () => {
                 </motion.div>
             </motion.div>
         </section>
+
+        {/* Hire Us Modal */}
+        <HireUsModal isOpen={isHireModalOpen} onClose={() => setIsHireModalOpen(false)} />
+        </>
     );
 };
 
 export default Hero;
+

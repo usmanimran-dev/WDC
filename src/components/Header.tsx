@@ -4,11 +4,13 @@ import { Button } from './Button';
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 import { AnnouncementBar } from './AnnouncementBar';
 import logoUrl from '../assets/ChatGPT Image Mar 12, 2026, 03_18_26 AM.png';
+import HireUsModal from './HireUsModal';
 
 export function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [hoveredPath, setHoveredPath] = useState<string | null>(null);
+    const [isHireModalOpen, setIsHireModalOpen] = useState(false);
 
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress, {
@@ -46,7 +48,7 @@ export function Header() {
         }
     };
 
-    return (
+    return (<>
         <header
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 flex flex-col ${isScrolled
                 ? 'bg-darkNavy/80 backdrop-blur-xl shadow-premium border-b border-white/5 supports-[backdrop-filter]:bg-darkNavy/60'
@@ -114,12 +116,7 @@ export function Header() {
                         <Button
                             variant="mint"
                             className="shadow-glow-mint hover:shadow-glow-mint-lg transition-shadow duration-300"
-                            onClick={() => {
-                                const element = document.querySelector('#contact');
-                                if (element) {
-                                    element.scrollIntoView({ behavior: 'smooth' });
-                                }
-                            }}
+                            onClick={() => setIsHireModalOpen(true)}
                         >
                             Get Started
                         </Button>
@@ -181,10 +178,7 @@ export function Header() {
                                     variant="mint"
                                     className="w-full"
                                     onClick={() => {
-                                        const element = document.querySelector('#contact');
-                                        if (element) {
-                                            element.scrollIntoView({ behavior: 'smooth' });
-                                        }
+                                        setIsHireModalOpen(true);
                                         setIsMobileMenuOpen(false);
                                     }}
                                 >
@@ -196,5 +190,8 @@ export function Header() {
                 )}
             </AnimatePresence>
         </header>
-    );
+
+        {/* Hire Us Modal */}
+        <HireUsModal isOpen={isHireModalOpen} onClose={() => setIsHireModalOpen(false)} />
+    </>);
 }
