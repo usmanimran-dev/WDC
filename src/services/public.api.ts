@@ -84,17 +84,33 @@ Software development agencies must mandate Server Components as the default for 
 ];
 
 export const fetchAllBlogs = async (): Promise<BlogPost[]> => {
+    // Fetch from both Dev.to AND Supabase AI blog posts in parallel
+    const [devToBlogs, aiBlogs] = await Promise.all([
+        fetchDevToBlogs(),
+        fetchAIBlogs(),
+    ]);
+    
+    // Merge and sort by date (newest first)
+    const allBlogs = [...devToBlogs, ...aiBlogs].sort(
+        (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+    );
+    
+    return allBlogs;
+};
+
+// Dev.to articles
+async function fetchDevToBlogs(): Promise<BlogPost[]> {
     try {
         const response = await fetch('https://dev.to/api/articles?username=muhammad_osman_1fb87a4a12');
         const data = await response.json();
         
         return data.map((article: any) => ({
-            id: article.id.toString(),
+            id: `devto-${article.id}`,
             title: article.title,
             slug: article.slug,
             excerpt: article.description,
             content: article.body_markdown || article.description,
-            featured_image: article.cover_image || article.social_image || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800', // fallback image
+            featured_image: article.cover_image || article.social_image || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800',
             tags: article.tag_list,
             created_at: article.published_at
         }));
@@ -102,26 +118,80 @@ export const fetchAllBlogs = async (): Promise<BlogPost[]> => {
         console.error('Error fetching Dev.to articles:', error);
         return [];
     }
-};
+}
+
+// Supabase AI-generated blog posts
+async function fetchAIBlogs(): Promise<BlogPost[]> {
+    try {
+        const { data, error } = await supabase
+            .from('ai_blog_posts')
+            .select('*')
+            .eq('published', true)
+            .order('created_at', { ascending: false });
+        
+        if (error) throw error;
+        
+        return (data || []).map((post: any) => ({
+            id: `ai-${post.id}`,
+            title: post.title,
+            slug: post.slug,
+            excerpt: post.excerpt,
+            content: post.content,
+            featured_image: post.featured_image || 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800',
+            tags: post.tags || ['AI', 'Technology'],
+            created_at: post.created_at
+        }));
+    } catch (error) {
+        console.error('Error fetching AI blog posts:', error);
+        return [];
+    }
+}
 
 export const fetchBlogBySlug = async (slug: string): Promise<BlogPost | null> => {
+    // 1. Try Dev.to first
     try {
         const response = await fetch(`https://dev.to/api/articles/muhammad_osman_1fb87a4a12/${slug}`);
-        if (!response.ok) return null;
-        const article = await response.json();
-        
-        return {
-            id: article.id.toString(),
-            title: article.title,
-            slug: article.slug,
-            excerpt: article.description,
-            content: article.body_html || article.body_markdown || article.description,
-            featured_image: article.cover_image || article.social_image || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800',
-            tags: article.tag_list,
-            created_at: article.published_at
-        };
+        if (response.ok) {
+            const article = await response.json();
+            return {
+                id: article.id.toString(),
+                title: article.title,
+                slug: article.slug,
+                excerpt: article.description,
+                content: article.body_html || article.body_markdown || article.description,
+                featured_image: article.cover_image || article.social_image || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800',
+                tags: article.tag_list,
+                created_at: article.published_at
+            };
+        }
     } catch (error) {
         console.error('Error fetching Dev.to article:', error);
+    }
+
+    // 2. Fallback to Supabase AI blog posts
+    try {
+        const { data, error } = await supabase
+            .from('ai_blog_posts')
+            .select('*')
+            .eq('slug', slug)
+            .eq('published', true)
+            .single();
+        
+        if (error || !data) return null;
+        
+        return {
+            id: data.id,
+            title: data.title,
+            slug: data.slug,
+            excerpt: data.excerpt,
+            content: data.content,
+            featured_image: data.featured_image || 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800',
+            tags: data.tags || ['AI', 'Technology'],
+            created_at: data.created_at
+        };
+    } catch (error) {
+        console.error('Error fetching AI blog post:', error);
         return null;
     }
 };
+

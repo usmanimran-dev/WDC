@@ -9,6 +9,7 @@ import { Section } from '@/components/Section';
 import Projects from '@/components/Projects';
 import WorkExperience from '@/components/WorkExperience';
 import Blog from '@/components/Blog';
+import AIAnnouncements from '@/components/AIAnnouncements';
 import { Testimonials } from '@/components/Testimonials';
 import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
@@ -36,6 +37,7 @@ const Index = () => {
         <About />
         <WorkExperience />
         <Blog />
+        <AIAnnouncements />
         <Testimonials />
         <Contact />
       </main>
