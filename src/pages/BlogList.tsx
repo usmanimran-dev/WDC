@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchAllBlogs } from '@/services/public.api';
 import { BlogPost as BlogPostType } from '@/types';
-import { formatDate, readingTime, stripHtml } from '@/utils/formatters';
+import { formatDate, readingTime, stripHtml, getValidImageUrl } from '@/utils/formatters';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { BookOpen, ArrowUpRight, Clock, Sparkles } from 'lucide-react';
@@ -88,7 +88,7 @@ export default function BlogList() {
                                         <div className="relative h-full w-full rounded-3xl overflow-hidden">
                                             <div className="absolute inset-0 bg-darkNavy/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
                                             <img 
-                                                src={blog.featured_image && blog.featured_image.startsWith('http') ? blog.featured_image : 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800'} 
+                                                src={getValidImageUrl(blog.featured_image)} 
                                                 alt={blog.title}
                                                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-in-out"
                                             />

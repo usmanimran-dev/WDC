@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchBlogBySlug } from '@/services/public.api';
 import { BlogPost as BlogPostType } from '@/types';
-import { formatDate, readingTime } from '@/utils/formatters';
+import { formatDate, readingTime, getValidImageUrl } from '@/utils/formatters';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ArrowLeft, Loader2 } from 'lucide-react';
@@ -55,7 +55,7 @@ export default function BlogPost() {
                         
                         {blog.featured_image && (
                             <img 
-                                src={blog.featured_image.startsWith('http') ? blog.featured_image : 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800'} 
+                                src={getValidImageUrl(blog.featured_image)} 
                                 alt={blog.title} 
                                 className="w-full h-auto rounded-2xl mb-12 shadow-2xl object-cover max-h-[500px]"
                             />

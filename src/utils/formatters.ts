@@ -27,6 +27,12 @@ export const formatDate = (timestamp: string): string => {
  * Returns an estimated reading time for a given text.
  * Example: "240 words" => "~2 min read"
  */
+
+
+/**
+ * Returns an estimated reading time for a given text.
+ * Example: "240 words" => "~2 min read"
+ */
 export const readingTime = (content: string): string => {
     const words = content.trim().split(/\s+/).length;
     const minutes = Math.ceil(words / 200);
@@ -39,4 +45,15 @@ export const readingTime = (content: string): string => {
 export const stripHtml = (html: string): string => {
     if (!html) return '';
     return html.replace(/<[^>]*>?/gm, '');
+};
+
+/**
+ * Returns a valid image URL, replacing deprecated or invalid ones with a fallback.
+ */
+export const getValidImageUrl = (url?: string): string => {
+    const fallback = 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800';
+    if (!url) return fallback;
+    if (!url.startsWith('http')) return fallback;
+    if (url.includes('source.unsplash.com')) return fallback;
+    return url;
 };
