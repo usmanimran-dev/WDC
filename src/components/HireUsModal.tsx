@@ -269,6 +269,7 @@ export default function HireUsModal({ isOpen, onClose }: HireUsModalProps) {
                     {/* Modal */}
                     <motion.div
                         className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto bg-[#0a0f1e] border border-white/10 rounded-3xl shadow-2xl shadow-mint/5"
+                        data-lenis-prevent="true"
                         initial={{ scale: 0.9, opacity: 0, y: 40 }}
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.9, opacity: 0, y: 40 }}

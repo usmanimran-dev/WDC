@@ -147,34 +147,6 @@ export const Testimonials = () => {
                     ))}
                 </div>
 
-                {/* Client Logos */}
-                <div className="clients-section">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-center mb-8"
-                    >
-                        <p className="text-textSecondary text-sm uppercase tracking-wide">Trusted by Leading Brands</p>
-                    </motion.div>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-                        {clients.map((client, _index) => (
-                            <motion.div
-                                key={client}
-                                className="client-logo flex items-center justify-center h-20 bg-cardBg rounded-lg group cursor-pointer"
-                                whileHover={{
-                                    y: -5,
-                                    scale: 1.05,
-                                }}
-                                transition={{ duration: 0.3 }}
-                            >
-                                <span className="text-gray-400 group-hover:text-royalBlue font-bold text-lg transition-colors">
-                                    {client}
-                                </span>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
             </div>
         </section>
     );

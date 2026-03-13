@@ -73,7 +73,7 @@ export default function TrustedBrands() {
                             <img
                                 src={brand.logo}
                                 alt={brand.name}
-                                className="relative z-10 h-10 md:h-12 w-auto max-w-[140px] object-contain filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                                className="relative z-10 h-14 md:h-20 w-auto max-w-[180px] object-contain filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 scale-125 md:scale-150"
                             />
                         </motion.div>
                     ))}
