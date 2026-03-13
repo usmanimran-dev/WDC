@@ -135,6 +135,19 @@ export default function HireUsModal({ isOpen, onClose }: HireUsModalProps) {
         }
     }, [phase, qualification.name, qualification.email]);
 
+    // Prevent background scrolling when modal is open
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isOpen]);
+
+
     const handleClose = () => {
         onClose();
         setTimeout(() => {
