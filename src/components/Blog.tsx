@@ -3,7 +3,7 @@ import { ArrowUpRight, BookOpen, Fingerprint } from "lucide-react";
 import { useEffect, useState } from 'react';
 import { fetchAllBlogs } from '@/services/public.api';
 import { BlogPost } from '@/types';
-import { formatDate, readingTime } from '@/utils/formatters';
+import { formatDate, readingTime, stripHtml } from '@/utils/formatters';
 import { Link } from 'react-router-dom';
 
 export default function Blog() {
@@ -77,7 +77,7 @@ export default function Blog() {
                                         {blog.title}
                                     </h3>
                                     <p className="text-sm text-white/50 leading-relaxed line-clamp-4 flex-grow mb-8">
-                                        {blog.excerpt}
+                                        {stripHtml(blog.excerpt)}
                                     </p>
 
                                     <div className="flex items-center justify-between pt-6 border-t border-white/10 mt-auto">

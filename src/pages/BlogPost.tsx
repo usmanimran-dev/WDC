@@ -55,7 +55,7 @@ export default function BlogPost() {
                         
                         {blog.featured_image && (
                             <img 
-                                src={blog.featured_image} 
+                                src={blog.featured_image.startsWith('http') ? blog.featured_image : 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800'} 
                                 alt={blog.title} 
                                 className="w-full h-auto rounded-2xl mb-12 shadow-2xl object-cover max-h-[500px]"
                             />

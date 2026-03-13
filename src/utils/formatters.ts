@@ -32,3 +32,11 @@ export const readingTime = (content: string): string => {
     const minutes = Math.ceil(words / 200);
     return `${minutes} min read`;
 };
+
+/**
+ * Strips HTML tags from a string.
+ */
+export const stripHtml = (html: string): string => {
+    if (!html) return '';
+    return html.replace(/<[^>]*>?/gm, '');
+};
