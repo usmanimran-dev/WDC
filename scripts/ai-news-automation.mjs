@@ -96,10 +96,33 @@ function parseRSSItems(xmlText) {
             return m ? m[1].trim() : '';
         };
 
+        // Extract image from various RSS sources
+        const extractImage = () => {
+            // 1. <media:content url="..." />
+            const mediaMatch = block.match(/<media:content[^>]+url=["']([^"']+)["']/i);
+            if (mediaMatch) return mediaMatch[1];
+            // 2. <enclosure url="..." type="image/..." />
+            const enclosureMatch = block.match(/<enclosure[^>]+url=["']([^"']+)["'][^>]*type=["']image\/[^"']+["']/i);
+            if (enclosureMatch) return enclosureMatch[1];
+            // Also try enclosure without type check
+            const encAny = block.match(/<enclosure[^>]+url=["']([^"']+\.(?:jpg|jpeg|png|webp|gif))["']/i);
+            if (encAny) return encAny[1];
+            // 3. <media:thumbnail url="..." />
+            const thumbMatch = block.match(/<media:thumbnail[^>]+url=["']([^"']+)["']/i);
+            if (thumbMatch) return thumbMatch[1];
+            // 4. <img src="..." /> inside description CDATA
+            const rawDesc = getTag('description');
+            const imgMatch = rawDesc.match(/<img[^>]+src=["']([^"']+)["']/i);
+            if (imgMatch) return imgMatch[1];
+            // 5. No image found
+            return null;
+        };
+
         const title = getTag('title');
         const link = getTag('link') || getTag('guid');
         const description = getTag('description').replace(/<[^>]*>/g, '').substring(0, 500);
         const pubDate = getTag('pubDate');
+        const image = extractImage();
 
         if (title) {
             items.push({
@@ -107,6 +130,7 @@ function parseRSSItems(xmlText) {
                 link,
                 excerpt: description,
                 published_at: pubDate ? new Date(pubDate).toISOString() : new Date().toISOString(),
+                image: image || null,
             });
         }
     }
@@ -227,8 +251,12 @@ function createSlug(title) {
 }
 
 // ─── Publish Blog Post ──────────────────────────────────────────────────────
-async function publishBlogPost(newsItem, content) {
+async function publishBlogPost(newsItem, content, imageUrl) {
     const slug = createSlug(newsItem.title);
+
+    // Use the real RSS image, or fall back to a relevant Unsplash image
+    const featured = imageUrl
+        || `https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800`;
 
     const { error } = await supabase.from('ai_blog_posts').insert({
         news_id: newsItem.id,
@@ -236,7 +264,7 @@ async function publishBlogPost(newsItem, content) {
         slug,
         excerpt: newsItem.excerpt,
         content,
-        featured_image: `https://source.unsplash.com/800x400/?artificial-intelligence,technology`,
+        featured_image: featured,
         tags: ['AI', 'Technology', 'News'],
         published: true,
     });
@@ -278,7 +306,7 @@ async function runPipeline() {
                 console.log(`Fallback: Using original excerpt for "${item.title}" due to API error.`);
                 articleContent = `${item.excerpt}\n\n[Read the full article here](${item.link})`;
             }
-            await publishBlogPost(savedItem, articleContent);
+            await publishBlogPost(savedItem, articleContent, item.image);
 
             // Small delay to respect API rate limits
             await new Promise(r => setTimeout(r, 2000));
