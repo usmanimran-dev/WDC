@@ -6,6 +6,7 @@ import { About } from '@/components/About';
 import { Container } from '@/components/Container';
 import { Section } from '@/components/Section';
 import Projects from '@/components/Projects';
+import TrustedBrands from '@/components/TrustedBrands';
 import WorkExperience from '@/components/WorkExperience';
 import Blog from '@/components/Blog';
 import AIAnnouncements from '@/components/AIAnnouncements';
@@ -26,6 +27,7 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
+        <TrustedBrands />
         <Section>
           <Container>
             <Services />
