@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sparkles } from 'lucide-react';
 import { Button } from './Button';
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 import { AnnouncementBar } from './AnnouncementBar';
 import logoUrl from '../assets/ChatGPT Image Mar 12, 2026, 03_18_26 AM.png';
 import HireUsModal from './HireUsModal';
+import { AIEstimatorModal } from './AIEstimatorModal';
 
 export function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [hoveredPath, setHoveredPath] = useState<string | null>(null);
     const [isHireModalOpen, setIsHireModalOpen] = useState(false);
+    const [isEstimateModalOpen, setIsEstimateModalOpen] = useState(false);
 
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress, {
@@ -104,21 +106,32 @@ export function Header() {
                         ))}
                     </nav>
 
-                    {/* CTA Button - Desktop */}
-                    <motion.div
-                        className="hidden md:block"
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.8 }}
-                    >
-                        <Button
-                            variant="mint"
-                            className="shadow-glow-mint hover:shadow-glow-mint-lg transition-shadow duration-300"
-                            onClick={() => setIsHireModalOpen(true)}
+                    {/* CTA Button and AI Estimate - Desktop */}
+                    <div className="hidden md:flex items-center gap-4">
+                        <motion.button
+                            onClick={() => setIsEstimateModalOpen(true)}
+                            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-mint/30 text-mint font-medium hover:bg-mint/10 hover:border-mint transition-all"
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.7 }}
                         >
-                            Get Started
-                        </Button>
-                    </motion.div>
+                            <Sparkles className="w-4 h-4" /> AI Estimate
+                        </motion.button>
+                        
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.8 }}
+                        >
+                            <Button
+                                variant="mint"
+                                className="shadow-glow-mint hover:shadow-glow-mint-lg transition-shadow duration-300"
+                                onClick={() => setIsHireModalOpen(true)}
+                            >
+                                Get Started
+                            </Button>
+                        </motion.div>
+                    </div>
 
                     {/* Mobile Menu Button */}
                     <motion.button
@@ -167,11 +180,20 @@ export function Header() {
                                 </motion.a>
                             ))}
                             <motion.div
-                                className="pt-2"
+                                className="pt-2 flex flex-col gap-3"
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.3 }}
                             >
+                                <button
+                                    className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl border border-mint/30 text-mint font-medium hover:bg-mint/10 transition-all"
+                                    onClick={() => {
+                                        setIsEstimateModalOpen(true);
+                                        setIsMobileMenuOpen(false);
+                                    }}
+                                >
+                                    <Sparkles className="w-4 h-4" /> AI Project Estimate
+                                </button>
                                 <Button
                                     variant="mint"
                                     className="w-full"
@@ -191,5 +213,7 @@ export function Header() {
 
         {/* Hire Us Modal */}
         <HireUsModal isOpen={isHireModalOpen} onClose={() => setIsHireModalOpen(false)} />
+        {/* AI Estimator Modal */}
+        <AIEstimatorModal isOpen={isEstimateModalOpen} onClose={() => setIsEstimateModalOpen(false)} />
     </>);
 }
