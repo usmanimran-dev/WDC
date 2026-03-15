@@ -21,7 +21,9 @@ export default defineConfig(({ mode }) => {
                   const { clientId, clientName, clientEmail, serviceName, servicePrice, discountApplied } = body;
                   
                   const Stripe = (await import('stripe')).default;
-                  const stripe = new Stripe(env.STRIPE_SECRET_KEY as string);
+                  const rawKey = (env.STRIPE_SECRET_KEY as string) || '';
+                  const cleanKey = rawKey.replace(/['"]/g, '').trim();
+                  const stripe = new Stripe(cleanKey);
 
                   const lineItems = [
                     {

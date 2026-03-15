@@ -12,7 +12,11 @@ export default async function handler(req, res) {
         if (!process.env.STRIPE_SECRET_KEY) {
             return res.status(500).json({ error: 'STRIPE_SECRET_KEY is missing in Vercel project environment variables.' });
         }
-        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+        
+        // Remove accidental copy-paste artifacts like invisible spaces, newlines, and quotes
+        const rawKey = process.env.STRIPE_SECRET_KEY || '';
+        const cleanKey = rawKey.replace(/['"]/g, '').trim();
+        const stripe = new Stripe(cleanKey);
 
         const {
             clientId,
