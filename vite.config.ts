@@ -111,7 +111,7 @@ export default defineConfig(({ mode }) => {
                     throw new Error(`Gemini API error ${response.status}: ${errBody}`);
                   }
 
-                  const data = await response.json();
+                  const data = await response.json() as any;
                   const content = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
                   if (!content) throw new Error('Empty response from Gemini');
