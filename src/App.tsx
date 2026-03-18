@@ -19,6 +19,7 @@ import AdminLayout from "./admin/AdminLayout";
 import AdminDashboard from "./admin/Dashboard";
 import ManageProjects from "./admin/ManageProjects";
 import ManageBlogs from "./admin/ManageBlogs";
+import FunnelAnalytics from "./admin/FunnelAnalytics";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
               <Route index element={<AdminDashboard />} />
               <Route path="projects" element={<ManageProjects />} />
               <Route path="blogs" element={<ManageBlogs />} />
+              <Route path="analytics" element={<FunnelAnalytics />} />
             </Route>
 
             {/* ── 404 ── */}

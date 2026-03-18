@@ -6,6 +6,7 @@ import { formatDate, readingTime, getValidImageUrl, stripHtml } from '@/utils/fo
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ArrowLeft, Loader2, ExternalLink } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 /**
  * Cleans article content for display:
@@ -50,6 +51,17 @@ export default function BlogPost() {
 
     return (
         <div className="min-h-screen bg-darkNavy text-white">
+            {blog && (
+                <Helmet>
+                    <title>{blog.title} | WDC</title>
+                    <meta name="description" content={blog.excerpt || `Read ${blog.title} by WDC - Premium Web Development Agency.`} />
+                    <meta property="og:title" content={blog.title} />
+                    <meta property="og:description" content={blog.excerpt} />
+                    {blog.featured_image && <meta property="og:image" content={getValidImageUrl(blog.featured_image)} />}
+                    <meta property="og:type" content="article" />
+                    <meta name="twitter:card" content="summary_large_image" />
+                </Helmet>
+            )}
             <Header />
             <main className="pt-40 pb-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
                 <Link to="/blog" className="inline-flex items-center text-mint hover:underline mb-8 font-semibold">

@@ -12,6 +12,7 @@ const AdminLayout = () => {
 
     const navItems = [
         { to: '/admin', icon: LayoutDashboard, label: 'Dashboard', end: true },
+        { to: '/admin/analytics', icon: LayoutDashboard, label: 'Funnel Analytics' },
         { to: '/admin/projects', icon: Briefcase, label: 'Projects' },
         { to: '/admin/blogs', icon: BookOpen, label: 'Blog Posts' },
     ];

@@ -62,7 +62,18 @@ export default async function handler(req, res) {
             if (supabaseUrl && supabaseKey) {
                 const supabase = createClient(supabaseUrl, supabaseKey);
                 
-                // 1. Update the client's status in the database to 'paid'
+                // 1. Log conversion in the funnel analytics table
+                try {
+                    await supabase.from('funnel_events').insert([{
+                        session_id: `webhook_${clientId}`, // Webhooks drop their session, so identify by clientId 
+                        event_name: 'completed_payment',
+                        metadata: { client: clientId, service: serviceName }
+                    }]);
+                } catch (err) {
+                    console.error('Failed to log funnel event:', err);
+                }
+
+                // 2. Update the client's status in the database to 'paid'
                 const { error } = await supabase
                     .from('client_onboarding')
                     .update({ status: 'paid', paid_at: new Date().toISOString() })
@@ -70,6 +81,8 @@ export default async function handler(req, res) {
                     
                 if (error) {
                     console.error('Failed to update client status in Supabase:', error);
+                    // Return 500 so Stripe retries the webhook
+                    return res.status(500).json({ error: 'Database update failed, Stripe should retry.' });
                 } else {
                     console.log('Client status successfully updated to "paid"');
                 }
@@ -79,8 +92,12 @@ export default async function handler(req, res) {
             const resendKey = process.env.RESEND_API_KEY?.replace(/['"]/g, '').trim();
             if (resendKey) {
                 const resend = new Resend(resendKey);
+                // Get the 'from' email from env vars, fallback to the resend testing domain (which only sends to you)
+                const fromEmail = process.env.RESEND_FROM_EMAIL || 'WDC Onboarding <onboarding@resend.dev>';
+                
+                // A. Send email to the Client
                 await resend.emails.send({
-                    from: 'WDC Onboarding <onboarding@resend.dev>', // Resend testing domain
+                    from: fromEmail,
                     to: clientEmail,
                     subject: 'Welcome to WDC! Next Steps for your Project',
                     html: `
@@ -93,7 +110,26 @@ export default async function handler(req, res) {
                         <p><strong>The WDC Team</strong></p>
                     `
                 });
-                console.log('Confirmation email sent to', clientEmail);
+                console.log('Confirmation email sent to client:', clientEmail);
+
+                // B. Send Admin Alert Email to You
+                const adminEmail = process.env.ADMIN_EMAIL || 'Webappdevelopersofchicago@gmail.com';
+                await resend.emails.send({
+                    from: fromEmail,
+                    to: adminEmail,
+                    subject: `💰 New Client Payment: ${clientName}`,
+                    html: `
+                        <h2>New Payment Received!</h2>
+                        <p><strong>Client:</strong> ${clientName}</p>
+                        <p><strong>Email:</strong> ${clientEmail}</p>
+                        <p><strong>Service:</strong> ${serviceName}</p>
+                        <p><strong>Client ID:</strong> ${clientId}</p>
+                        <br/>
+                        <p>The client's status in Supabase has been updated to <strong>paid</strong>.</p>
+                        <p>Please reach out to the client to begin onboarding.</p>
+                    `
+                });
+                console.log('Admin alert email sent to:', adminEmail);
             } else {
                 console.log('Skipped sending email: RESEND_API_KEY is not configured.');
             }

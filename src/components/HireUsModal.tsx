@@ -100,6 +100,9 @@ interface HireUsModalProps {
 }
 
 export default function HireUsModal({ isOpen, onClose }: HireUsModalProps) {
+    // Generate a unique session ID for funnel tracking
+    const [sessionId] = useState(() => Math.random().toString(36).substring(2, 15));
+
     // Phase: 'qualify' | 'onboard' | 'success' | 'rejected'
     const [phase, setPhase] = useState<'qualify' | 'onboard' | 'success' | 'rejected'>('qualify');
     const [qualifyStep, setQualifyStep] = useState(0); // 0: info, 1: service, 2: questions
@@ -137,10 +140,33 @@ export default function HireUsModal({ isOpen, onClose }: HireUsModalProps) {
         }
     }, [phase, qualification.name, qualification.email]);
 
-    // Prevent background scrolling when modal is open
+    // Prevent background scrolling when modal is open and log initial open
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
+            // Log modal open event if not already logged for this flow
+            if (phase === 'qualify' && qualifyStep === 0) {
+                // Capture organic and marketing traffic data for SEO
+                const urlParams = new URLSearchParams(window.location.search);
+                const utmSource = urlParams.get('utm_source') || 'organic';
+                const utmMedium = urlParams.get('utm_medium') || 'direct';
+                const utmCampaign = urlParams.get('utm_campaign') || null;
+                const referrer = document.referrer || 'direct';
+                const isMobile = window.innerWidth <= 768;
+
+                supabase.from('funnel_events').insert([{
+                    session_id: sessionId,
+                    event_name: 'opened_modal',
+                    metadata: { 
+                        traffic_source: utmSource,
+                        traffic_medium: utmMedium,
+                        campaign: utmCampaign,
+                        referrer: referrer,
+                        device: isMobile ? 'mobile' : 'desktop',
+                        path: window.location.pathname
+                    }
+                }]).then(({ error }) => { if (error) console.error(error); });
+            }
         } else {
             document.body.style.overflow = '';
         }
@@ -200,9 +226,21 @@ export default function HireUsModal({ isOpen, onClose }: HireUsModalProps) {
         } else {
             // Check qualifying answers
             if (!qualification.readyToInvest || !qualification.hasBudget) {
+                // Log rejected
+                supabase.from('funnel_events').insert([{
+                    session_id: sessionId,
+                    event_name: 'rejected',
+                    metadata: { reason: !qualification.readyToInvest ? 'not_ready' : 'no_budget' }
+                }]).then(({ error }) => { if (error) console.error(error); });
                 setPhase('rejected');
             } else {
                 setQualification(prev => ({ ...prev, timestamp: Date.now() }));
+                // Log passed qualification
+                supabase.from('funnel_events').insert([{
+                    session_id: sessionId,
+                    event_name: 'passed_qualification',
+                    metadata: { service: qualification.selectedService }
+                }]).then(({ error }) => { if (error) console.error(error); });
                 setPhase('onboard');
                 setErrors({});
             }
@@ -213,6 +251,13 @@ export default function HireUsModal({ isOpen, onClose }: HireUsModalProps) {
         if (!validateOnboarding()) return;
         setSubmitting(true);
         setPaymentError(null);
+
+        // Log checkout initiation
+        supabase.from('funnel_events').insert([{
+            session_id: sessionId,
+            event_name: 'initiate_checkout',
+            metadata: { client: onboarding.clientId }
+        }]).then(({ error }) => { if (error) console.error(error); });
 
         try {
             // Step 1: Save to Supabase as 'pending'
@@ -227,6 +272,7 @@ export default function HireUsModal({ isOpen, onClose }: HireUsModalProps) {
                     selected_service: qualification.selectedService,
                     total_price: totalForDisplay,
                     discount_applied: discountApplied,
+                    password: onboarding.password,
                     status: 'pending'
                 });
 

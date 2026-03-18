@@ -7,6 +7,7 @@ import { Footer } from '@/components/Footer';
 import { BookOpen, ArrowUpRight, Clock, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 
 export default function BlogList() {
     const [blogs, setBlogs] = useState<BlogPostType[]>([]);
@@ -22,6 +23,13 @@ export default function BlogList() {
 
     return (
         <div className="min-h-screen bg-darkNavy text-white flex flex-col">
+            <Helmet>
+                <title>Blog & Insights | WDC - Premium Web Development</title>
+                <meta name="description" content="Deep dives into enterprise architecture, AI integrations, scalable SaaS builds, and stories from our top engineers at WDC." />
+                <meta property="og:title" content="Blog & Insights | WDC" />
+                <meta property="og:description" content="Deep dives into enterprise architecture, AI integrations, scalable SaaS builds, and stories from our top engineers." />
+                <meta property="og:type" content="website" />
+            </Helmet>
             <Header />
             <main className="flex-grow pt-40 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
                 
