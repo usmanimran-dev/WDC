@@ -18,7 +18,7 @@ export const AnnouncementBar = () => {
                     })));
                 } else {
                     setAnnouncements([{ 
-                        title: "Welcome to WDC! Discover our Premium Software Solutions.", 
+                        title: "Welcome to DC! Discover our Premium Software Solutions.", 
                         link: "/#services" 
                     }]);
                 }

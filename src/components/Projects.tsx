@@ -15,8 +15,20 @@ import totkyImg from '../assets/totky.png';
 import libasImg from '../assets/libas.png';
 import cartistan from '../assets/cartistan.png';
 import flowImg from '../assets/flow.png';
+import restaurantErpImg from '../assets/restaurant-erp.png';
 
 const projects = [
+  {
+    id: 20260327,
+    title: "Restaurant ERP & POS",
+    subtitle: "Multi-Tenant SaaS",
+    description: "A modern, multi-tenant Restaurant Management SaaS platform built with Flutter Web and Supabase. It provides a complete ERP and POS solution with dynamic module control, role-based permissions, and secure data isolation.",
+    image: restaurantErpImg,
+    category: "web-apps",
+    tags: ["Flutter", "Supabase", "ERP"],
+    link: "#",
+    github: ""
+  },
   {
     id: 20260225,
     title: "NGO Assist",
@@ -140,12 +152,12 @@ const projects = [
   },
   {
     id: 1000,
-    title: "LinkedIn Clone",
-    subtitle: "Bubble.io Social Engine",
-    description: "A feature-rich LinkedIn-style web app developed using Bubble.io, with real-time messaging and job listings.",
+    title: "LinkedIn Clone (Archived)",
+    subtitle: "Built on Bubble.io",
+    description: "A professional-grade social network engine developed using Bubble.io, with secure messaging and advanced job board logic.",
     image: linkedinImg,
-    category: "web-apps",
-    tags: ["Bubble.io", "No-Code", "Networking"],
+    category: "archives",
+    tags: ["Bubble.io", "No-Code", "Social Engine"],
     link: "https://bubble.io/page?id=linkedin-16318&tab=Design&name=index",
     github: ""
   },

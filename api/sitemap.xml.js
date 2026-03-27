@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
         
         let dynamicUrls = '';
-        const domain = 'https://webappdevelopersofchicago.vercel.app';
+        const domain = 'https://www.developersofchicago.com';
 
         if (supabaseUrl && supabaseKey) {
             const supabase = createClient(supabaseUrl, supabaseKey);

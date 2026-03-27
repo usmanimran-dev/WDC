@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => {
                     {
                       price_data: {
                         currency: 'usd',
-                        product_data: { name: serviceName, description: `WDC ${serviceName} — Client ${clientId}` },
+                        product_data: { name: serviceName, description: `DC ${serviceName} — Client ${clientId}` },
                         unit_amount: servicePrice * 100,
                       },
                       quantity: 1,
@@ -89,7 +89,7 @@ export default defineConfig(({ mode }) => {
                     throw new Error('GEMINI_API_KEY is not configured');
                   }
 
-                  const prompt = `You are a Senior Project Manager at WDC (Web App Developers of Chicago), a premium software agency.\nA potential client wants to build the following project:\n"${projectDescription}"\n\nAnalyze this project and estimate the cost, timeline, and key features required.\nWDC's minimum engagement is $5,000. Complex apps usually range from $15,000 to $50,000+.\nProvide a realistic but slightly premium agency estimate.\n\nYou MUST respond with a perfectly formatted JSON object EXACTLY matching this structure:\n{\n  "minPrice": number, \n  "maxPrice": number,\n  "timeline": "string (e.g. 8-12 weeks)",\n  "features": ["Feature 1", "Feature 2", "Feature 3", "Feature 4", "Feature 5"],\n  "techStack": ["React", "Node.js", "etc"],\n  "summary": "A 2-sentence professional breakdown of what it takes to build this."\n}\nDo not include markdown blocks, just the raw JSON object.`;
+                  const prompt = `You are a Senior Project Manager at DC (Developers of Chicago), a premium software agency.\nA potential client wants to build the following project:\n"${projectDescription}"\n\nAnalyze this project and estimate the cost, timeline, and key features required.\nDC's minimum engagement is $5,000. Complex apps usually range from $15,000 to $50,000+.\nProvide a realistic but slightly premium agency estimate.\n\nYou MUST respond with a perfectly formatted JSON object EXACTLY matching this structure:\n{\n  "minPrice": number, \n  "maxPrice": number,\n  "timeline": "string (e.g. 8-12 weeks)",\n  "features": ["Feature 1", "Feature 2", "Feature 3", "Feature 4", "Feature 5"],\n  "techStack": ["React", "Node.js", "etc"],\n  "summary": "A 2-sentence professional breakdown of what it takes to build this."\n}\nDo not include markdown blocks, just the raw JSON object.`;
 
                   const response = await fetch(
                     `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
@@ -145,9 +145,9 @@ export default defineConfig(({ mode }) => {
                   const resend = new Resend(resendKey);
 
                   const { data, error } = await resend.emails.send({
-                    from: 'WDC AI Estimator <onboarding@resend.dev>',
+                    from: 'DC AI Estimator <onboarding@resend.dev>',
                     to: email,
-                    subject: 'Your AI Project Estimate from WDC',
+                    subject: 'Your AI Project Estimate from DC',
                     html: `<h2>Your Estimate</h2><p>${JSON.stringify(estimateData)}</p>` // Simpler for local test
                   });
 

@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/routes/ProtectedRoute";
-import { CustomCursor } from '@/components/CustomCursor';
 
 // Public Pages
 import Index from "./pages/Index";
@@ -27,7 +26,6 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <TooltipProvider>
-        <CustomCursor />
         <Toaster />
         <Sonner />
         <BrowserRouter>

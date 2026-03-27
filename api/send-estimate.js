@@ -29,13 +29,13 @@ export default async function handler(req, res) {
         };
 
         const { data, error } = await resend.emails.send({
-            from: 'WDC AI Estimator <onboarding@resend.dev>',
+            from: 'DC AI Estimator <onboarding@resend.dev>',
             to: email,
-            subject: 'Your AI Project Estimate from WDC',
+            subject: 'Your AI Project Estimate from DC',
             html: `
                 <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #0A1628;">
                     <h2 style="color: #2563EB;">Your Project Estimate</h2>
-                    <p>Thanks for using the WDC AI Estimator! Here is a summary of the project analysis we generated for you.</p>
+                    <p>Thanks for using the DC AI Estimator! Here is a summary of the project analysis we generated for you.</p>
                     
                     <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin: 20px 0;">
                         <h3 style="margin-top: 0; color: #10B981;">Investment & Timeline</h3>
@@ -57,8 +57,8 @@ export default async function handler(req, res) {
                     <p>${estimateData.techStack.join(', ')}</p>
 
                     <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;" />
-                    <p style="font-size: 14px; color: #64748b;">Ready to start? Reply to this email or visit <a href="https://webappdevelopersofchicago.vercel.app">our website</a> to book a discovery call.</p>
-                    <p style="font-weight: bold;">The WDC Team</p>
+                    <p style="font-size: 14px; color: #64748b;">Ready to start? Reply to this email or visit <a href="https://www.developersofchicago.com">our website</a> to book a discovery call.</p>
+                    <p style="font-weight: bold;">The DC Team</p>
                 </div>
             `
         });

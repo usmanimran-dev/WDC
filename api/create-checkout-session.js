@@ -38,7 +38,7 @@ export default async function handler(req, res) {
                     currency: 'usd',
                     product_data: {
                         name: serviceName,
-                        description: `WDC ${serviceName} — Client ${clientId}`,
+                        description: `DC ${serviceName} — Client ${clientId}`,
                     },
                     unit_amount: servicePrice * 100, // Stripe uses cents
                 },
@@ -62,7 +62,7 @@ export default async function handler(req, res) {
         }
 
         // Determine the origin for redirect URLs
-        const origin = req.headers.origin || 'https://webappdevelopersofchicago.vercel.app';
+        const origin = req.headers.origin || 'https://www.developersofchicago.com';
 
         // Create the Stripe Checkout session
         const session = await stripe.checkout.sessions.create({

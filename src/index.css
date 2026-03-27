@@ -43,8 +43,6 @@
   body {
     @apply bg-darkNavy text-white font-sans antialiased;
     scroll-behavior: smooth;
-    cursor: none;
-    /* Hide default cursor for custom cursor */
   }
 
   h1,
@@ -165,12 +163,7 @@
   }
 }
 
-/* Mobile cursor override */
-@media (max-width: 768px) {
-  body {
-    cursor: auto !important;
-  }
-}
+
 
 /* AI Estimator Modal Effects */
 .custom-scrollbar::-webkit-scrollbar {

@@ -24,7 +24,7 @@ export const About = () => {
                     >
                         <div className="inline-flex items-center px-4 py-2 rounded-full bg-mint/10 border border-mint/20 backdrop-blur-sm mb-6">
                             <Sparkles className="text-mint mr-2" size={16} />
-                            <span className="text-mint font-medium text-sm">About WDC</span>
+                            <span className="text-mint font-medium text-sm">About DC</span>
                         </div>
 
                         <h2 className="text-4xl md:text-5xl font-bold mb-6">
@@ -33,7 +33,7 @@ export const About = () => {
                         </h2>
 
                         <p className="text-white text-lg mb-6 leading-relaxed">
-                            We are WDC (Webapp Developers of Chicago), a premium Software Development Agency with a specialized focus on Enterprise Solutions, SaaS architecture, and expansive Digital Mobility & Logistics platforms.
+                            We are DC (Developers of Chicago), a premium Software Development Agency with a specialized focus on Enterprise Solutions, SaaS architecture, and expansive Digital Mobility & Logistics platforms.
                         </p>
 
                         <p className="text-textSecondary text-lg leading-relaxed mb-8">

@@ -24,9 +24,9 @@ export default function BlogList() {
     return (
         <div className="min-h-screen bg-darkNavy text-white flex flex-col">
             <Helmet>
-                <title>Blog & Insights | WDC - Premium Web Development</title>
-                <meta name="description" content="Deep dives into enterprise architecture, AI integrations, scalable SaaS builds, and stories from our top engineers at WDC." />
-                <meta property="og:title" content="Blog & Insights | WDC" />
+                <title>Blog & Insights | DC - Premium Web Development</title>
+                <meta name="description" content="Deep dives into enterprise architecture, AI integrations, scalable SaaS builds, and stories from our top engineers at DC." />
+                <meta property="og:title" content="Blog & Insights | DC" />
                 <meta property="og:description" content="Deep dives into enterprise architecture, AI integrations, scalable SaaS builds, and stories from our top engineers." />
                 <meta property="og:type" content="website" />
             </Helmet>
@@ -41,7 +41,7 @@ export default function BlogList() {
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-mint/10 border border-mint/20 backdrop-blur-sm mb-6"
                     >
                         <Sparkles className="w-4 h-4 text-mint" />
-                        <span className="text-mint font-semibold text-xs tracking-wider uppercase">WDC Publications</span>
+                        <span className="text-mint font-semibold text-xs tracking-wider uppercase">DC Publications</span>
                     </motion.div>
                     
                     <motion.h1 

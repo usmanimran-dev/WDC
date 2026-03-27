@@ -16,12 +16,12 @@ export default async function handler(req, res) {
             throw new Error('GEMINI_API_KEY is not configured');
         }
 
-        const prompt = `You are a Senior Project Manager at WDC (Web App Developers of Chicago), a premium software agency.
+        const prompt = `You are a Senior Project Manager at DC (Developers of Chicago), a premium software agency.
 A potential client wants to build the following project:
 "${projectDescription}"
 
 Analyze this project and estimate the cost, timeline, and key features required.
-WDC's minimum engagement is $5,000. Complex apps usually range from $15,000 to $50,000+.
+DC's minimum engagement is $5,000. Complex apps usually range from $15,000 to $50,000+.
 Provide a realistic but slightly premium agency estimate.
 
 You MUST respond with a perfectly formatted JSON object EXACTLY matching this structure:

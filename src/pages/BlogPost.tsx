@@ -58,8 +58,8 @@ export default function BlogPost() {
         <div className="min-h-screen bg-darkNavy text-white">
             {blog && (
                 <Helmet>
-                    <title>{blog.title} | WDC</title>
-                    <meta name="description" content={blog.excerpt || `Read ${blog.title} by WDC - Premium Web Development Agency.`} />
+                    <title>{blog.title} | DC</title>
+                    <meta name="description" content={blog.excerpt || `Read ${blog.title} by DC - Premium Web Development Agency.`} />
                     <meta property="og:title" content={blog.title} />
                     <meta property="og:description" content={blog.excerpt} />
                     {blog.featured_image && <meta property="og:image" content={getValidImageUrl(blog.featured_image)} />}

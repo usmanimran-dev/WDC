@@ -20,7 +20,7 @@ graph LR
 
 1. Go to your [Supabase Dashboard](https://supabase.com/dashboard)
 2. Open **SQL Editor** (left sidebar)
-3. Copy the entire contents of [supabase_ai_news_schema.sql](file:///c:/Users/Usman/Webappdevelopersofchicago/supabase_ai_news_schema.sql)
+3. Copy the entire contents of [supabase_ai_news_schema.sql](file:///c:/Users/Usman/Developersofchicago/supabase_ai_news_schema.sql)
 4. Paste and click **Run**
 
 This creates 3 tables:
@@ -61,7 +61,7 @@ npm run ai-news
 You'll see:
 ```
 ╔══════════════════════════════════════════════╗
-║  🤖 WDC AI News Automation                  ║
+║  🤖 DC AI News Automation                  ║
 ║  Checking RSS feeds every 10 minutes         ║
 ║  Press Ctrl+C to stop                        ║
 ╚══════════════════════════════════════════════╝

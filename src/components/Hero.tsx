@@ -107,15 +107,20 @@ export const Hero = () => {
 
             <motion.div
                 style={{ opacity }}
-                className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20"
+                className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-40"
             >
-                {/* Badge */}
-                <div className="hero-badge hero-content-item flex items-center justify-center mb-8">
-                    <div className="inline-flex items-center px-4 py-2 rounded-full bg-royalBlue/10 border border-royalBlue/20 backdrop-blur-sm">
-                        <Sparkles className="text-mint mr-2" size={20} />
-                        <span className="text-textSecondary font-medium uppercase tracking-wide text-sm">Software Development Agency</span>
-                    </div>
-                </div>
+                {/* Minimal Brand Tag */}
+                <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="flex items-center justify-center gap-4 mb-6 opacity-40 hover:opacity-100 transition-opacity group cursor-default"
+                >
+                    <div className="h-px w-6 bg-mint/50 group-hover:w-12 transition-all duration-500" />
+                    <span className="text-[10px] uppercase tracking-[0.4em] text-white font-bold whitespace-nowrap">Software Development Agency</span>
+                    <div className="h-px w-6 bg-mint/50 group-hover:w-12 transition-all duration-500" />
+                </motion.div>
+
 
                 {/* Main Headline with 3D effect */}
                 <h1 className="hero-content-item text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight perspective-1000">
@@ -129,23 +134,20 @@ export const Hero = () => {
                 </p>
 
                 {/* CTA Buttons with magnetic effect */}
-                <div className="hero-content-item flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <MagneticButton strength={0.4}>
+                <div className="hero-content-item flex flex-col sm:flex-row gap-4 justify-center items-center mb-32 z-10">
                         <Button
                             variant="mint"
                             size="lg"
-                            className="group min-w-[200px] transform transition-all duration-300 hover:scale-105 hover:shadow-glow-mint"
+                            className="group min-w-[200px]"
                             onClick={() => setIsHireModalOpen(true)}
                         >
                             Hire Us
-                            <ArrowRight className="ml-2 inline-block group-hover:translate-x-1 transition-transform" size={20} />
+                            <ArrowRight className="ml-2 inline-block transition-transform" size={20} />
                         </Button>
-                    </MagneticButton>
-                    <MagneticButton strength={0.3}>
                         <Button
                             variant="outline"
                             size="lg"
-                            className="min-w-[200px] transform transition-all duration-300 hover:scale-105"
+                            className="min-w-[200px]"
                             onClick={() => {
                                 const element = document.querySelector('#projects');
                                 if (element) element.scrollIntoView({ behavior: 'smooth' });
@@ -153,7 +155,6 @@ export const Hero = () => {
                         >
                             View Our Work
                         </Button>
-                    </MagneticButton>
                 </div>
 
                 {/* Scroll Indicator */}
@@ -161,7 +162,7 @@ export const Hero = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.8, delay: 1.5 }}
-                    className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer group"
+                    className="absolute bottom-4 left-1/2 transform -translate-x-1/2 cursor-pointer group z-50"
                     onClick={scrollToNextSection}
                 >
                     <motion.div

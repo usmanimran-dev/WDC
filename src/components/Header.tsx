@@ -3,7 +3,7 @@ import { Menu, X, Sparkles } from 'lucide-react';
 import { Button } from './Button';
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 import { AnnouncementBar } from './AnnouncementBar';
-import logoUrl from '../assets/ChatGPT Image Mar 12, 2026, 03_18_26 AM.png';
+import logoUrl from '../assets/dc-logo-white.png';
 import HireUsModal from './HireUsModal';
 import { AIEstimatorModal } from './AIEstimatorModal';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -70,34 +70,37 @@ export function Header() {
         >
             <AnnouncementBar />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <div className="flex items-center justify-between h-24 md:h-28">
-                    {/* Logo */}
-                    <motion.a
-                        href="/"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            if (location.pathname === '/') {
-                                window.scrollTo({ top: 0, behavior: 'smooth' });
-                            } else {
-                                navigate('/');
-                            }
-                        }}
-                        className="flex items-center group py-2 cursor-pointer"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <motion.div
-                            className="relative h-24 sm:h-32 md:h-40 flex items-center"
-                            whileHover={{ scale: 1.05 }}
-                            transition={{ duration: 0.3 }}
+                <div className="flex items-center justify-between h-24 md:h-28 relative">
+                    {/* Logo (Left) */}
+                    {/* Logo (Left) */}
+                    <div className="flex-shrink-0">
+                        <motion.a
+                            href="/"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                if (location.pathname === '/') {
+                                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                                } else {
+                                    navigate('/');
+                                }
+                            }}
+                            className="flex items-center group py-2 cursor-pointer"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5 }}
                         >
-                            <img src={logoUrl} alt="Agency Logo" className="w-auto h-full object-contain drop-shadow-lg" />
-                        </motion.div>
-                    </motion.a>
+                            <motion.div
+                                className="relative h-16 md:h-20 flex items-center"
+                                whileHover={{ scale: 1.05 }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <img src={logoUrl} alt="Agency Logo" className="w-auto h-full object-contain mix-blend-multiply" />
+                            </motion.div>
+                        </motion.a>
+                    </div>
 
-                    {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center space-x-1">
+                    {/* Desktop Navigation (Center) */}
+                    <nav className="hidden md:flex items-center absolute left-1/2 -translate-x-1/2">
                         {navItems.map((item, index) => (
                             <motion.a
                                 key={item.label}
@@ -126,8 +129,8 @@ export function Header() {
                         ))}
                     </nav>
 
-                    {/* CTA Button and AI Estimate - Desktop */}
-                    <div className="hidden md:flex items-center gap-4">
+                    {/* CTA Button and AI Estimate (Right) */}
+                    <div className="hidden md:flex items-center gap-4 flex-shrink-0">
                         <motion.button
                             onClick={() => setIsEstimateModalOpen(true)}
                             className="hidden items-center gap-2 px-4 py-2 rounded-xl border border-mint/30 text-mint font-medium hover:bg-mint/10 hover:border-mint transition-all pointer-events-none opacity-0"

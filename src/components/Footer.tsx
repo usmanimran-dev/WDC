@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Linkedin, Heart, Facebook } from 'lucide-react';
-import logoUrl from '../assets/ChatGPT Image Mar 12, 2026, 03_18_26 AM.png';
+import logoUrl from '../assets/dc-logo-white.png';
 
 export const Footer = () => {
     return (
@@ -10,8 +10,8 @@ export const Footer = () => {
                     {/* Brand */}
                     <div className="md:col-span-2">
                         <div className="flex items-center mb-6">
-                            <div className="h-32 sm:h-40 md:h-48 flex items-center">
-                                <img src={logoUrl} alt="Agency Logo" className="w-auto h-full object-contain drop-shadow-lg" />
+                            <div className="h-20 md:h-24 flex items-center">
+                                <img src={logoUrl} alt="Agency Logo" className="w-auto h-full object-contain mix-blend-multiply" />
                             </div>
                         </div>
                         <p className="text-textSecondary mb-6 max-w-md">
@@ -68,7 +68,7 @@ export const Footer = () => {
                         <h4 className="text-white font-bold mb-4 font-display">Contact</h4>
                         <ul className="space-y-3 text-textSecondary">
                             <li className="hover:text-mint transition-colors duration-300">
-                                <a href="mailto:inquiry@wdc.com">inquiry@wdc.com</a>
+                                <a href="mailto:inquiry@developersofchicago.com">inquiry@developersofchicago.com</a>
                             </li>
                             <li>Chicago, IL</li>
                         </ul>
@@ -77,10 +77,10 @@ export const Footer = () => {
 
                 <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-textSecondary text-sm">
-                        © {new Date().getFullYear()} WDC. All rights reserved.
+                        © {new Date().getFullYear()} DC. All rights reserved.
                     </p>
                     <p className="text-textSecondary text-sm flex items-center gap-2">
-                        Made with <Heart className="w-4 h-4 text-mint fill-current animate-pulse" /> by WDC
+                        Made with <Heart className="w-4 h-4 text-mint fill-current animate-pulse" /> by DC
                     </p>
                 </div>
             </div>

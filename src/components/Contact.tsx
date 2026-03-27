@@ -52,8 +52,8 @@ export const Contact = () => {
                         <div className="space-y-8">
                             <div className="contact-reveal">
                                 <span className="block text-sm text-mint mb-2 font-mono tracking-wider">EMAIL US</span>
-                                <a href="mailto:inquiry@wdc.com" className="text-xl md:text-2xl font-medium text-white hover:text-mint transition-colors inline-flex items-center gap-2 group break-all">
-                                    inquiry@wdc.com
+                                <a href="mailto:inquiry@developersofchicago.com" className="text-xl md:text-2xl font-medium text-white hover:text-mint transition-colors inline-flex items-center gap-2 group break-all">
+                                    inquiry@developersofchicago.com
                                     <ArrowUpRight className="w-6 h-6 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform flex-shrink-0" />
                                 </a>
                             </div>

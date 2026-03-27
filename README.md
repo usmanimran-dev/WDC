@@ -1,4 +1,4 @@
-# 🚀 WDC — Web App Developers of Chicago
+# 🚀 DC — Developers of Chicago
 
 A premium, high-performance agency portfolio built with modern web technologies. Features stunning animations, a fully automated blog system, and a powerful admin dashboard.
 
@@ -82,8 +82,8 @@ src/
 
 ```bash
 # Clone the repository
-git clone https://github.com/usmanimran-dev/Webappdevelopersofchicago.git
-cd Webappdevelopersofchicago
+git clone https://github.com/usmanimran-dev/Developersofchicago.git
+cd Developersofchicago
 
 # Install dependencies
 npm install
@@ -119,5 +119,5 @@ This project is proprietary. All rights reserved.
 ---
 
 <p align="center">
-  Built with ❤️ by <strong>WDC</strong> — Web App Developers of Chicago
+  Built with ❤️ by <strong>DC</strong> — Developers of Chicago
 </p>

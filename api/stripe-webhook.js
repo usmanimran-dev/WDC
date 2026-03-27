@@ -93,13 +93,13 @@ export default async function handler(req, res) {
             if (resendKey) {
                 const resend = new Resend(resendKey);
                 // Get the 'from' email from env vars, fallback to the resend testing domain (which only sends to you)
-                const fromEmail = process.env.RESEND_FROM_EMAIL || 'WDC Onboarding <onboarding@resend.dev>';
+                const fromEmail = process.env.RESEND_FROM_EMAIL || 'DC Onboarding <onboarding@resend.dev>';
                 
                 // A. Send email to the Client
                 await resend.emails.send({
                     from: fromEmail,
                     to: clientEmail,
-                    subject: 'Welcome to WDC! Next Steps for your Project',
+                    subject: 'Welcome to DC! Next Steps for your Project',
                     html: `
                         <h2>Welcome aboard, ${clientName}!</h2>
                         <p>We're thrilled to have you as a new client and have successfully received your payment for <strong>${serviceName}</strong>.</p>
@@ -107,13 +107,13 @@ export default async function handler(req, res) {
                         <p>If you have any immediate questions, feel free to reply directly to this email.</p>
                         <br/>
                         <p>Best regards,</p>
-                        <p><strong>The WDC Team</strong></p>
+                        <p><strong>The DC Team</strong></p>
                     `
                 });
                 console.log('Confirmation email sent to client:', clientEmail);
 
                 // B. Send Admin Alert Email to You
-                const adminEmail = process.env.ADMIN_EMAIL || 'inquiry@wdc.com';
+                const adminEmail = process.env.ADMIN_EMAIL || 'inquiry@developersofchicago.com';
                 await resend.emails.send({
                     from: fromEmail,
                     to: adminEmail,
