@@ -1,6 +1,0 @@
-src/admin/ManageBlogs.tsx(5,41): error TS2307: Cannot find module '@/utils/formatters' or its corresponding type declarations.
-src/admin/ManageProjects.tsx(5,28): error TS2307: Cannot find module '@/utils/formatters' or its corresponding type declarations.
-src/components/ui/sidebar.tsx(6,29): error TS2307: Cannot find module '@/hooks/use-mobile' or its corresponding type declarations.
-src/components/ui/toaster.tsx(1,26): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
-src/components/ui/use-toast.ts(1,33): error TS2307: Cannot find module '@/hooks/use-toast' or its corresponding type declarations.
-src/routes/ProtectedRoute.tsx(6,15): error TS2503: Cannot find namespace 'JSX'.

@@ -19,6 +19,7 @@ import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, X, XCircle } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 const Index = () => {
   useSmoothScroll();
@@ -45,6 +46,17 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>Developers of Chicago | Premium Software Development Agency</title>
+        <meta name="description" content="DC is a premium software development agency in Chicago building custom web apps, mobile apps, ERP systems, and SaaS platforms. Expert Flutter, React, and Node.js developers." />
+        <link rel="canonical" href="https://www.developersofchicago.com/" />
+        <meta property="og:title" content="Developers of Chicago | Premium Software Development Agency" />
+        <meta property="og:description" content="Custom web apps, mobile apps, ERP systems, and SaaS platforms built by expert engineers in Chicago." />
+        <meta property="og:url" content="https://www.developersofchicago.com/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://www.developersofchicago.com/logo.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
       <Header />
       <main>
         <Hero />

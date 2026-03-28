@@ -60,8 +60,10 @@ export default function BlogPost() {
                 <Helmet>
                     <title>{blog.title} | DC</title>
                     <meta name="description" content={blog.excerpt || `Read ${blog.title} by DC - Premium Web Development Agency.`} />
+                    <link rel="canonical" href={`https://www.developersofchicago.com/blog/${slug}`} />
                     <meta property="og:title" content={blog.title} />
                     <meta property="og:description" content={blog.excerpt} />
+                    <meta property="og:url" content={`https://www.developersofchicago.com/blog/${slug}`} />
                     {blog.featured_image && <meta property="og:image" content={getValidImageUrl(blog.featured_image)} />}
                     <meta property="og:type" content="article" />
                     <meta name="twitter:card" content="summary_large_image" />

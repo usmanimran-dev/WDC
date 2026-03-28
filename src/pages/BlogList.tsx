@@ -26,9 +26,13 @@ export default function BlogList() {
             <Helmet>
                 <title>Blog & Insights | DC - Premium Web Development</title>
                 <meta name="description" content="Deep dives into enterprise architecture, AI integrations, scalable SaaS builds, and stories from our top engineers at DC." />
+                <link rel="canonical" href="https://www.developersofchicago.com/blog" />
                 <meta property="og:title" content="Blog & Insights | DC" />
                 <meta property="og:description" content="Deep dives into enterprise architecture, AI integrations, scalable SaaS builds, and stories from our top engineers." />
+                <meta property="og:url" content="https://www.developersofchicago.com/blog" />
                 <meta property="og:type" content="website" />
+                <meta property="og:image" content="https://www.developersofchicago.com/logo.png" />
+                <meta name="twitter:card" content="summary_large_image" />
             </Helmet>
             <Header />
             <main className="flex-grow pt-40 pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
