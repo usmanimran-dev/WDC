@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Sparkles } from 'lucide-react';
+import { Menu, X, Sparkles, Users } from 'lucide-react';
 import { Button } from './Button';
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 import { AnnouncementBar } from './AnnouncementBar';
@@ -7,6 +7,7 @@ import logoUrl from '../assets/dc-logo-white.png';
 import HireUsModal from './HireUsModal';
 import { AIEstimatorModal } from './AIEstimatorModal';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 
 export function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -17,6 +18,7 @@ export function Header() {
     
     const navigate = useNavigate();
     const location = useLocation();
+    const { user, isDeveloper, developerProfile } = useAuth();
 
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress, {
@@ -129,18 +131,37 @@ export function Header() {
                         ))}
                     </nav>
 
-                    {/* CTA Button and AI Estimate (Right) */}
-                    <div className="hidden md:flex items-center gap-4 flex-shrink-0">
-                        <motion.button
-                            onClick={() => setIsEstimateModalOpen(true)}
-                            className="hidden items-center gap-2 px-4 py-2 rounded-xl border border-mint/30 text-mint font-medium hover:bg-mint/10 hover:border-mint transition-all pointer-events-none opacity-0"
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 0, x: 0 }}
-                            transition={{ delay: 0.7 }}
-                        >
-                            <Sparkles className="w-4 h-4" /> AI Estimate
-                        </motion.button>
-                        
+                    {/* CTA Buttons (Right) */}
+                    <div className="hidden md:flex items-center gap-3 flex-shrink-0">
+                        {/* Join DC / Profile Button */}
+                        {user && isDeveloper ? (
+                            <motion.button
+                                onClick={() => navigate('/profile')}
+                                className="flex items-center gap-2.5 px-4 py-2 rounded-xl border border-white/10 hover:border-mint/30 transition-all group"
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.6 }}
+                            >
+                                <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-mint/20 to-royalBlue/20 flex items-center justify-center text-xs font-bold text-mint">
+                                    {developerProfile?.full_name?.charAt(0)?.toUpperCase() || 'D'}
+                                </div>
+                                <span className="text-sm font-medium text-white/60 group-hover:text-white transition-colors">
+                                    {developerProfile?.full_name?.split(' ')[0] || 'Profile'}
+                                </span>
+                            </motion.button>
+                        ) : (
+                            <motion.button
+                                onClick={() => navigate('/join')}
+                                className="flex items-center gap-2 px-4 py-2 rounded-xl border border-mint/30 text-mint font-medium text-sm hover:bg-mint/10 hover:border-mint transition-all"
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.6 }}
+                            >
+                                <Users className="w-4 h-4" />
+                                Join DC
+                            </motion.button>
+                        )}
+
                         <motion.div
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -209,13 +230,14 @@ export function Header() {
                                 transition={{ delay: 0.3 }}
                             >
                                 <button
-                                    className="hidden items-center justify-center gap-2 w-full px-4 py-3 rounded-xl border border-mint/30 text-mint font-medium hover:bg-mint/10 transition-all pointer-events-none opacity-0"
+                                    className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl border border-mint/30 text-mint font-medium hover:bg-mint/10 transition-all"
                                     onClick={() => {
-                                        setIsEstimateModalOpen(true);
+                                        navigate(user && isDeveloper ? '/profile' : '/join');
                                         setIsMobileMenuOpen(false);
                                     }}
                                 >
-                                    <Sparkles className="w-4 h-4" /> AI Project Estimate
+                                    <Users className="w-4 h-4" />
+                                    {user && isDeveloper ? 'My Profile' : 'Join DC'}
                                 </button>
                                 <Button
                                     variant="mint"

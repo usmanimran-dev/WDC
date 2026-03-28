@@ -1,0 +1,162 @@
+{
+  "name": "DC Social Media Auto-Poster",
+  "flow": [
+    {
+      "id": 1,
+      "module": "builtin:BasicScheduler",
+      "version": 1,
+      "parameters": {
+        "scheduling": {
+          "type": "everyDay",
+          "time": "09:00"
+        }
+      },
+      "mapper": {},
+      "metadata": {
+        "designer": { "x": 0, "y": 0 },
+        "comment": "Runs every day at 9:00 AM"
+      }
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {},
+      "mapper": {
+        "url": "https://oxputeaplbndzolsnyto.supabase.co/rest/v1/ai_blog_posts?published=eq.true&order=created_at.desc&limit=1",
+        "method": "GET",
+        "headers": [
+          {
+            "name": "apikey",
+            "value": "YOUR_SUPABASE_ANON_KEY"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer YOUR_SUPABASE_ANON_KEY"
+          },
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "qs": [],
+        "bodyType": "",
+        "contentType": "",
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "followAllRedirects": false,
+        "shareCookies": false,
+        "timeout": ""
+      },
+      "metadata": {
+        "designer": { "x": 300, "y": 0 },
+        "comment": "Fetch latest published blog post from Supabase"
+      }
+    },
+    {
+      "id": 3,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "parameters": {},
+      "mapper": {
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=YOUR_GEMINI_API_KEY",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "parseResponse": true,
+        "bodyType": "raw",
+        "contentType": "application/json",
+        "body": "{\"contents\":[{\"parts\":[{\"text\":\"You are the social media manager for Developers of Chicago (DC), a premium software development agency based in Chicago. Write a compelling, professional Facebook and LinkedIn post about the following blog article. Rules: 1) Keep it under 120 words. 2) Be professional but conversational and engaging. 3) Highlight the key technical insight or business value. 4) End with a call-to-action directing readers to visit developersofchicago.com to learn more. 5) Do NOT include hashtags. 6) Do NOT use emojis. 7) Write in first person plural (we). Article Title: {{2.data[].title}} --- Article Summary: {{2.data[].excerpt}}\"}]}]}",
+        "authUser": "",
+        "authPass": "",
+        "qs": [],
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "followAllRedirects": false,
+        "shareCookies": false,
+        "timeout": ""
+      },
+      "metadata": {
+        "designer": { "x": 600, "y": 0 },
+        "comment": "Send blog content to Gemini AI to generate a social media post"
+      }
+    },
+    {
+      "id": 4,
+      "module": "facebook:ActionCreatePagePost",
+      "version": 5,
+      "parameters": {
+        "__IMTCONN__": "__CONNECT_YOUR_FACEBOOK_ACCOUNT_HERE__"
+      },
+      "mapper": {
+        "page": "__SELECT_YOUR_DC_PAGE_ID_HERE__",
+        "message": "{{3.data.candidates[].content.parts[].text}}\n\nRead more: https://www.developersofchicago.com/blog/{{2.data[].slug}}",
+        "link": "https://www.developersofchicago.com/blog/{{2.data[].slug}}"
+      },
+      "metadata": {
+        "designer": { "x": 900, "y": -100 },
+        "comment": "Post to DC Facebook Page with AI-generated caption + blog link"
+      }
+    },
+    {
+      "id": 5,
+      "module": "linkedin:ActionCreateShare",
+      "version": 2,
+      "parameters": {
+        "__IMTCONN__": "__CONNECT_YOUR_LINKEDIN_ACCOUNT_HERE__"
+      },
+      "mapper": {
+        "organizationId": "__YOUR_LINKEDIN_COMPANY_PAGE_ID__",
+        "text": "{{3.data.candidates[].content.parts[].text}}\n\nRead more: https://www.developersofchicago.com/blog/{{2.data[].slug}}",
+        "url": "https://www.developersofchicago.com/blog/{{2.data[].slug}}",
+        "visibility": "PUBLIC"
+      },
+      "metadata": {
+        "designer": { "x": 900, "y": 100 },
+        "comment": "Post to DC LinkedIn Company Page with AI-generated caption + blog link"
+      }
+    },
+    {
+      "id": 6,
+      "module": "instagram:ActionCreatePhoto",
+      "version": 2,
+      "parameters": {
+        "__IMTCONN__": "__CONNECT_YOUR_INSTAGRAM_BUSINESS_ACCOUNT_HERE__"
+      },
+      "mapper": {
+        "imageUrl": "{{2.data[].featured_image}}",
+        "caption": "{{3.data.candidates[].content.parts[].text}}\n\n🔗 Link in bio\n\n#SoftwareDevelopment #WebDev #CustomSoftware #ChicagoTech #FlutterDev #SaaS #TechAgency #AppDevelopment #ERPSystems #DevelopersOfChicago",
+        "page": "__SELECT_YOUR_FACEBOOK_PAGE_LINKED_TO_INSTAGRAM__"
+      },
+      "metadata": {
+        "designer": { "x": 900, "y": 300 },
+        "comment": "Post to DC Instagram with blog featured image + AI caption + hashtags"
+      }
+    }
+  ],
+  "metadata": {
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false
+    },
+    "designer": {
+      "orphans": []
+    }
+  }
+}

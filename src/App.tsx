@@ -12,12 +12,16 @@ import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import BlogList from "./pages/BlogList";
 import BlogPost from "./pages/BlogPost";
+import Join from "./pages/Join";
+import DeveloperProfile from "./pages/DeveloperProfile";
+import Estimate from "./pages/Estimate";
 
 // Admin Pages
 import AdminLayout from "./admin/AdminLayout";
 import AdminDashboard from "./admin/Dashboard";
 import ManageProjects from "./admin/ManageProjects";
 import ManageBlogs from "./admin/ManageBlogs";
+import ManageDevelopers from "./admin/ManageDevelopers";
 import FunnelAnalytics from "./admin/FunnelAnalytics";
 
 const queryClient = new QueryClient();
@@ -35,6 +39,9 @@ const App = () => (
             <Route path="/login" element={<Navigate to="/?login=true" replace />} />
             <Route path="/blog" element={<BlogList />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/join" element={<Join />} />
+            <Route path="/profile" element={<DeveloperProfile />} />
+            <Route path="/estimate" element={<Estimate />} />
 
             {/* ── Admin Routes (Protected) ── */}
             <Route
@@ -48,6 +55,7 @@ const App = () => (
               <Route index element={<AdminDashboard />} />
               <Route path="projects" element={<ManageProjects />} />
               <Route path="blogs" element={<ManageBlogs />} />
+              <Route path="developers" element={<ManageDevelopers />} />
               <Route path="analytics" element={<FunnelAnalytics />} />
             </Route>
 

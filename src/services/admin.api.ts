@@ -83,3 +83,27 @@ export const adminLogout = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) throw new Error(error.message);
 };
+
+// ─── Developers ──────────────────────────────────────────────────────────────
+
+export const adminGetDevelopers = async () => {
+    const { data, error } = await supabase
+        .from('developer_profiles')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+export const adminUpdateDeveloperStatus = async (id: string, status: string) => {
+    const { data, error } = await supabase
+        .from('developer_profiles')
+        .update({ status })
+        .eq('id', id)
+        .select()
+        .single();
+
+    if (error) throw new Error(error.message);
+    return data;
+};
