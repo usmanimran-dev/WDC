@@ -107,3 +107,70 @@ export const adminUpdateDeveloperStatus = async (id: string, status: string) => 
     if (error) throw new Error(error.message);
     return data;
 };
+
+// ─── Agency Projects ─────────────────────────────────────────────────────────
+
+export const adminGetAgencyProjects = async () => {
+    const { data, error } = await supabase
+        .from('projects')
+        .select(`
+            *,
+            developer:assigned_developer_id (full_name)
+        `)
+        .order('created_at', { ascending: false });
+
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+// ─── Payments & Financials ──────────────────────────────────────────────────
+
+export const adminGetPayments = async () => {
+    const { data, error } = await supabase
+        .from('payments')
+        .select(`
+            *,
+            developer:developer_id (full_name, email, designation),
+            project:project_id (title)
+        `)
+        .order('created_at', { ascending: false });
+
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+export const adminCreatePayment = async (paymentData: any) => {
+    const { data, error } = await supabase
+        .from('payments')
+        .insert([paymentData])
+        .select()
+        .single();
+        
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+export const adminUpdatePaymentStatus = async (id: string, status: string) => {
+    const { data, error } = await supabase
+        .from('payments')
+        .update({ 
+            status,
+            paid_at: status === 'paid' ? new Date().toISOString() : null
+        })
+        .eq('id', id)
+        .select()
+        .single();
+
+    // If paid, update the developer's total_earned
+    if (status === 'paid' && data) {
+        const { data: dev } = await supabase.from('developer_profiles').select('total_earned').eq('id', data.developer_id).single();
+        const currentTotal = dev?.total_earned || 0;
+        
+        await supabase.from('developer_profiles')
+            .update({ total_earned: Number(currentTotal) + Number(data.amount) })
+            .eq('id', data.developer_id);
+    }
+
+    if (error) throw new Error(error.message);
+    return data;
+};

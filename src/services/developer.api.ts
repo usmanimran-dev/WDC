@@ -15,6 +15,7 @@ export interface DeveloperProfile {
   avatar_url: string;
   status: 'pending' | 'approved' | 'active' | 'suspended';
   role: 'developer' | 'lead' | 'manager';
+  total_earned?: number;
   created_at: string;
   updated_at: string;
 }
@@ -94,4 +95,41 @@ export const updateDeveloperProfile = async (
     .single();
   if (error) throw new Error(error.message);
   return data;
+};
+
+// --- Projects & Payments ---
+
+export const getAssignedProjects = async () => {
+    const { data, error } = await supabase
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false });
+    
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+export const getDeveloperPayments = async () => {
+    const { data, error } = await supabase
+        .from('payments')
+        .select(`
+            *,
+            projects:project_id (title)
+        `)
+        .order('created_at', { ascending: false });
+    
+    if (error) throw new Error(error.message);
+    return data;
+};
+
+export const updateProjectStatus = async (projectId: string, status: string) => {
+    const { data, error } = await supabase
+        .from('projects')
+        .update({ status })
+        .eq('id', projectId)
+        .select()
+        .single();
+        
+    if (error) throw new Error(error.message);
+    return data;
 };

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchAllProjects } from '@/services/public.api';
-import { adminCreateProject, adminDeleteProject } from '@/services/admin.api';
+import { adminCreateProject, adminDeleteProject, adminGetDevelopers } from '@/services/admin.api';
 import { Project, InsertProject } from '@/types';
 import { formatDate } from '@/utils/formatters';
 import { Plus, Trash2, ExternalLink, Github, Loader2, X } from 'lucide-react';
@@ -13,6 +13,10 @@ const defaultForm: InsertProject = {
     image_url: '',
     live_url: '',
     github_url: '',
+    client_name: '',
+    budget: 0,
+    assigned_developer_id: '',
+    status: 'pending',
 };
 
 const ManageProjects = () => {
@@ -23,15 +27,20 @@ const ManageProjects = () => {
     const [techInput, setTechInput] = useState('');
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState('');
+    const [developers, setDevelopers] = useState<any[]>([]);
 
-    const loadProjects = async () => {
+    const loadData = async () => {
         setLoading(true);
-        const data = await fetchAllProjects();
-        setProjects(data);
+        const [projData, devData] = await Promise.all([
+            fetchAllProjects(),
+            adminGetDevelopers()
+        ]);
+        setProjects(projData);
+        setDevelopers(devData.filter(d => ['approved', 'active'].includes(d.status)));
         setLoading(false);
     };
 
-    useEffect(() => { loadProjects(); }, []);
+    useEffect(() => { loadData(); }, []);
 
     const handleAddTech = () => {
         if (techInput.trim() && !form.tech_stack.includes(techInput.trim())) {
@@ -49,10 +58,13 @@ const ManageProjects = () => {
         setError('');
         setSubmitting(true);
         try {
-            await adminCreateProject(form);
+            await adminCreateProject({
+                ...form,
+                assigned_developer_id: form.assigned_developer_id || null, // send null if empty
+            });
             setForm(defaultForm);
             setShowForm(false);
-            await loadProjects();
+            await loadData();
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -64,7 +76,7 @@ const ManageProjects = () => {
         if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
         try {
             await adminDeleteProject(id);
-            await loadProjects();
+            await loadData();
         } catch (err: any) {
             alert(err.message);
         }
@@ -110,6 +122,54 @@ const ManageProjects = () => {
                                     value={form.image_url || ''}
                                     onChange={e => setForm(p => ({ ...p, image_url: e.target.value }))}
                                     placeholder="https://..."
+                                    className="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-violet-500 transition-all"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="text-xs text-slate-400 uppercase tracking-widest font-semibold block mb-2">Client Name / Company</label>
+                                <input
+                                    value={form.client_name || ''}
+                                    onChange={e => setForm(p => ({ ...p, client_name: e.target.value }))}
+                                    placeholder="Acme Corp"
+                                    className="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-violet-500 transition-all"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-xs text-slate-400 uppercase tracking-widest font-semibold block mb-2">Assign Developer (Optional)</label>
+                                <select 
+                                    value={form.assigned_developer_id || ''} 
+                                    onChange={e => setForm({ ...form, assigned_developer_id: e.target.value })}
+                                    className="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white text-sm focus:outline-none focus:border-violet-500 transition-all cursor-pointer"
+                                >
+                                    <option value="">-- No Assignment (Internal) --</option>
+                                    {developers.map(d => (
+                                        <option key={d.id} value={d.id}>{d.full_name} ({d.designation})</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="text-xs text-slate-400 uppercase tracking-widest font-semibold block mb-2">Budget Allocation (USD)</label>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    value={form.budget || ''}
+                                    onChange={e => setForm(p => ({ ...p, budget: Number(e.target.value) }))}
+                                    placeholder="5000"
+                                    className="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-violet-500 transition-all"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-xs text-slate-400 uppercase tracking-widest font-semibold block mb-2">Target Deadline</label>
+                                <input
+                                    type="date"
+                                    value={form.deadline ? new Date(form.deadline).toISOString().split('T')[0] : ''}
+                                    onChange={e => setForm(p => ({ ...p, deadline: new Date(e.target.value).toISOString() }))}
                                     className="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-violet-500 transition-all"
                                 />
                             </div>
@@ -237,10 +297,38 @@ const ManageProjects = () => {
                             <div className="flex-1 min-w-0">
                                 <h3 className="text-white font-bold">{project.title}</h3>
                                 <p className="text-slate-400 text-sm mt-1 line-clamp-2">{project.description}</p>
-                                <div className="flex flex-wrap gap-1.5 mt-3">
+                                <div className="flex flex-wrap gap-1.5 mt-3 mb-3">
                                     {project.tech_stack.slice(0, 5).map(tech => (
                                         <span key={tech} className="px-2 py-0.5 bg-slate-800 text-slate-400 text-xs rounded-full border border-slate-700">{tech}</span>
                                     ))}
+                                </div>
+                                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4 p-3 bg-slate-950/50 rounded-xl border border-slate-800/50">
+                                    <div>
+                                        <p className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Client</p>
+                                        <p className="text-sm text-slate-300 font-medium">{project.client_name || 'Internal'}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Assigned To</p>
+                                        <p className="text-sm text-slate-300 font-medium">{
+                                            project.assigned_developer_id 
+                                                ? developers.find(d => d.id === project.assigned_developer_id)?.full_name || 'Assigned'
+                                                : 'Unassigned'
+                                        }</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Budget</p>
+                                        <p className="text-sm text-emerald-400 font-medium font-display">${project.budget?.toLocaleString() || 0}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Status</p>
+                                        <span className={`inline-block mt-0.5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest rounded-md ${
+                                            project.status === 'completed' ? 'bg-emerald-500/10 text-emerald-400' :
+                                            project.status === 'in_progress' ? 'bg-blue-500/10 text-blue-400' :
+                                            'bg-yellow-500/10 text-yellow-500'
+                                        }`}>
+                                            {project.status?.replace('_', ' ') || 'Pending'}
+                                        </span>
+                                    </div>
                                 </div>
                                 <p className="text-slate-600 text-xs mt-2">Created {formatDate(project.created_at)}</p>
                             </div>

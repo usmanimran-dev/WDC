@@ -8,6 +8,11 @@ export interface Project {
     image_url: string | null;
     live_url: string | null;
     github_url: string | null;
+    client_name?: string | null;
+    budget?: number;
+    deadline?: string | null;
+    assigned_developer_id?: string | null;
+    status?: string;
     created_at: string;
 }
 

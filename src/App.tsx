@@ -14,6 +14,7 @@ import BlogList from "./pages/BlogList";
 import BlogPost from "./pages/BlogPost";
 import Join from "./pages/Join";
 import DeveloperProfile from "./pages/DeveloperProfile";
+import CommunityChat from "./pages/CommunityChat";
 import Estimate from "./pages/Estimate";
 
 // Admin Pages
@@ -22,6 +23,7 @@ import AdminDashboard from "./admin/Dashboard";
 import ManageProjects from "./admin/ManageProjects";
 import ManageBlogs from "./admin/ManageBlogs";
 import ManageDevelopers from "./admin/ManageDevelopers";
+import ManagePayments from "./admin/ManagePayments";
 import FunnelAnalytics from "./admin/FunnelAnalytics";
 
 const queryClient = new QueryClient();
@@ -41,6 +43,7 @@ const App = () => (
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/join" element={<Join />} />
             <Route path="/profile" element={<DeveloperProfile />} />
+            {/* <Route path="/community" element={<CommunityChat />} /> */}
             <Route path="/estimate" element={<Estimate />} />
 
             {/* ── Admin Routes (Protected) ── */}
@@ -56,6 +59,7 @@ const App = () => (
               <Route path="projects" element={<ManageProjects />} />
               <Route path="blogs" element={<ManageBlogs />} />
               <Route path="developers" element={<ManageDevelopers />} />
+              <Route path="payments" element={<ManagePayments />} />
               <Route path="analytics" element={<FunnelAnalytics />} />
             </Route>
 

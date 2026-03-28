@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Sparkles, Users } from 'lucide-react';
+import { Menu, X, Sparkles, Users, MessageCircle } from 'lucide-react';
 import { Button } from './Button';
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 import { AnnouncementBar } from './AnnouncementBar';
@@ -133,6 +133,22 @@ export function Header() {
 
                     {/* CTA Buttons (Right) */}
                     <div className="hidden md:flex items-center gap-3 flex-shrink-0">
+                        {/* Community Chat Button (Archived)
+                        {user && isDeveloper && (
+                            <motion.button
+                                onClick={() => navigate('/community')}
+                                className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/5 bg-white/5 hover:bg-mint/10 hover:border-mint/30 transition-all text-white/40 hover:text-white"
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: 0.5 }}
+                                title="Community Chat"
+                            >
+                                <MessageCircle className="w-5 h-5" />
+                                <span className="text-sm font-bold tracking-tight">Chat</span>
+                            </motion.button>
+                        )}
+                        */}
+
                         {/* Join DC / Profile Button */}
                         {user && isDeveloper ? (
                             <motion.button

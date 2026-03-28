@@ -1,6 +1,6 @@
 import { NavLink, useNavigate, Outlet } from 'react-router-dom';
 import { adminLogout } from '@/services/admin.api';
-import { LayoutDashboard, Briefcase, BookOpen, LogOut, ExternalLink, Users } from 'lucide-react';
+import { LayoutDashboard, Briefcase, BookOpen, LogOut, ExternalLink, Users, DollarSign } from 'lucide-react';
 
 const AdminLayout = () => {
     const navigate = useNavigate();
@@ -16,6 +16,7 @@ const AdminLayout = () => {
         { to: '/admin/projects', icon: Briefcase, label: 'Projects' },
         { to: '/admin/blogs', icon: BookOpen, label: 'Blog Posts' },
         { to: '/admin/developers', icon: Users, label: 'Developers' },
+        { to: '/admin/payments', icon: DollarSign, label: 'Payouts' },
     ];
 
     return (
